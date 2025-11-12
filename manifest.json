@@ -1,0 +1,12 @@
+{
+  "name": "CCNA Trainer",
+  "short_name": "CCNA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#03121a",
+  "theme_color": "#064e4f",
+  "icons": [
+    { "src": "/icons/icon-192.png", "type":"image/png", "sizes":"192x192" },
+    { "src": "/icons/icon-512.png", "type":"image/png", "sizes":"512x512" }
+  ]
+}
