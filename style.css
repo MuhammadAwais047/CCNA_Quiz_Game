@@ -12,13 +12,12 @@
 html,body{height:100%;margin:0;background:linear-gradient(180deg,#01121a 0%, #061827 100%);color:#e6f7f6;font-family:var(--font-sans)}
 .app{max-width:980px;margin:18px auto;padding:12px}
 
-/* --- TOP BAR (Improved) --- */
+/* --- TOP BAR --- */
 .topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:10px 14px;
-  /* Stronger Topbar Contrast and Visual Accent Stripe */
   background: linear-gradient(90deg, rgba(2, 18, 26, 0.9), transparent); 
   border-radius:10px;
   border-left: 4px solid var(--accent);
@@ -35,25 +34,23 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#01121a 0%, #06
   border-radius:10px;
   margin-top:12px;
   border:1px solid rgba(255,255,255,0.03);
-  /* Subtle Card Depth */
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.15); 
 }
 
-/* --- BUTTONS (Improved) --- */
+/* --- BUTTONS (CORRECTED READABILITY) --- */
 .btn{
   background:var(--accent);
-  color:#022;
+  color: #e6f7f6; /* Corrected: Light text for contrast */
   border:none;
   padding:8px 10px;
   border-radius:8px;
   cursor:pointer;
-  /* Better Button Press Feel */
   box-shadow: 0 4px 6px rgba(6, 182, 180, 0.2);
   transition: all 0.2s ease;
 }
 .btn:active {
   transform: translateY(1px);
-  box-shadow: none; /* Shadow disappears on press */
+  box-shadow: none;
 }
 .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted); box-shadow:none;}
 .back{background:transparent;border:none;color:var(--muted);cursor:pointer}
@@ -63,22 +60,21 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#01121a 0%, #06
 .mode-btn{
   background:linear-gradient(90deg,var(--accent),var(--accent-2));
   border:none;
-  color:#012; 
+  color: #e6f7f6; /* Corrected: Light text for contrast */
   padding:16px;
   border-radius:10px;
   font-weight:600;
   cursor:pointer;
-  /* Enhanced Mode Button Look */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); 
   transition: all 0.2s ease;
 }
 .mode-btn:hover{transform:translateY(-3px)}
 
-/* --- QUIZ OPTIONS (Improved) --- */
+/* --- QUIZ OPTIONS --- */
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .opt{background:var(--glass);padding:10px;border-radius:8px;cursor:pointer;border:1px solid rgba(255,255,255,0.03); transition: all 0.2s ease;}
 .opt:hover{
-  background: rgba(6, 182, 180, 0.08); /* Slight accent color tint on hover */
+  background: rgba(6, 182, 180, 0.08);
   border-color: var(--accent);
   transform: translateY(-2px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
@@ -86,7 +82,7 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#01121a 0%, #06
 .opt.correct{outline:3px solid var(--accent)}
 .opt.wrong{outline:3px solid var(--danger)}
 
-/* --- INPUTS & TERMINAL (Improved) --- */
+/* --- INPUTS & TERMINAL --- */
 .input, .textarea{
   width:100%;
   padding:8px;
@@ -99,11 +95,10 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#01121a 0%, #06
 .input:focus, .textarea:focus {
     outline: none; 
     border: 1px solid var(--accent);
-    box-shadow: 0 0 0 2px rgba(6, 182, 180, 0.5); /* Focus Glow */
+    box-shadow: 0 0 0 2px rgba(6, 182, 180, 0.5);
 }
 .textarea{min-height:90px;font-family:monospace}
 .terminal{
-  /* Enhancing the Terminal Look */
   background:#000908;
   color:#7ff5ee;
   padding:12px;
@@ -114,7 +109,7 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#01121a 0%, #06
   border:1px dashed rgba(6, 182, 180, 0.2);
 }
 
-/* --- MENU STATS (New Structure CSS) --- */
+/* --- MENU STATS --- */
 .menu-stats-grid {
     display: flex;
     gap: 12px;
@@ -141,7 +136,31 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#01121a 0%, #06
     margin-top: 4px;
 }
 .stat-value.active {
-    color: #48ff48; /* Green for "On" state */
+    color: #48ff48;
+}
+
+/* --- DRAG & DROP --- */
+.drag-area{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.drag-item{background:#052a2a;padding:10px;border-radius:8px;cursor:grab}
+
+/* New: Target style for the drop zone */
+.drag-target {
+  background: var(--glass);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px dashed var(--muted);
+  cursor: default;
+  min-height: 40px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  transition: background 0.2s;
+  flex: 1 1 45%; /* Allow it to wrap nicely on desktop */
+}
+/* New: Feedback when item is dropped */
+.drag-target[data-got] {
+    background: var(--card); 
+    border-color: var(--accent);
+    color: #e6f7f6;
 }
 
 /* --- UTILITY & MISC --- */
@@ -150,8 +169,6 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#01121a 0%, #06
 .hidden{display:none}
 .timer{color:var(--muted)}
 .small{margin-top:8px}
-.drag-area{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-.drag-item{background:#052a2a;padding:10px;border-radius:8px;cursor:grab}
 .explain{margin-top:10px;color:var(--muted);padding:8px;border-radius:8px;background: rgba(255,255,255,0.01)}
 .footer{margin-top:12px;text-align:center;color:var(--muted);font-size:12px}
 
