@@ -17,7 +17,21 @@ async function loadData() {
     };
   }
 }
-
+// Initialize audio context on user interaction
+document.addEventListener('click', () => {
+  // Create audio context
+  if (typeof AudioContext !== 'undefined') {
+    window.audioContext = new AudioContext();
+  }
+  
+  // Load all audio files
+  document.querySelectorAll('audio').forEach(audio => {
+    audio.load();
+  });
+  
+  // Remove the event listener after first click
+  document.removeEventListener('click', arguments.callee);
+});
 // Initialize app after DOM loads
 document.addEventListener('DOMContentLoaded', async () => {
   // Load data first
