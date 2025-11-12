@@ -1,0 +1,17 @@
+{
+  "questions": [
+    {"type":"mc","q":"What does ACL stand for?","o":["Access Control List","Address Control Layer"],"a":0,"e":"Security!"}
+  ],
+  "subnetting": [
+    {"q":"192.168.10.0/24 → 60 hosts","a":"192.168.10.0/26","e":"60+2=62 → 2^6=64 → /26"}
+  ],
+  "labs": [
+    {
+      "name": "Fix DHCP",
+      "scenario": "PC not getting IP. Fix DHCP on R1.",
+      "cli": "R1# ",
+      "solution": "ip dhcp pool LAN",
+      "feedback": "DHCP working!"
+    }
+  ]
+}
