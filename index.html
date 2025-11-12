@@ -1,83 +1,155 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCNA Mastery Pro - Interactive Learning Platform</title>
-    <meta http-equiv="refresh" content="0; url=ccna-mastery-pro.html">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0e1a;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
-        }
-        .loading {
-            text-align: center;
-        }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(0, 212, 255, 0.3);
-            border-top: 3px solid #00d4ff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        p {
-            color: #b8c5d1;
-            font-size: 1.1rem;
-        }
-        .redirect-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        .redirect-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
-        }
-    </style>
-<base target="_blank">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CCNA Trainer — PWA</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#064e4f" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-    <div class="loading">
-        <div class="spinner"></div>
-        <h1>CCNA Mastery Pro</h1>
-        <p>Loading Interactive Learning Platform...</p>
-        <p>If you are not redirected automatically, <a href="ccna-mastery-pro.html" class="redirect-link">click here</a></p>
-    </div>
-    
-    <script>
-        // Fallback redirect in case meta refresh doesn't work
-        setTimeout(function() {
-            window.location.href = 'ccna-mastery-pro.html';
-        }, 2000);
-    </script>
+  <div id="app" class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>CCNA Trainer</h1>
+        <small>Offline PWA • Dark Teal</small>
+      </div>
+      <div class="actions">
+        <button id="installBtn" class="btn hidden">Install</button>
+        <button id="resetBtn" class="btn ghost">Reset Progress</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- MENU -->
+      <section id="menu" class="panel">
+        <h2>Main Menu</h2>
+        <div class="grid">
+          <button class="mode-btn" data-mode="quiz">Quizzes</button>
+          <button class="mode-btn" data-mode="subnet">Subnetting</button>
+          <button class="mode-btn" data-mode="labs">Labs (CLI)</button>
+          <button class="mode-btn" data-mode="drag">Drag & Drop</button>
+          <button class="mode-btn" data-mode="sim">Simulations</button>
+          <button class="mode-btn" data-mode="trbl">Troubleshooting</button>
+        </div>
+        <div class="menu-stats">
+          <div>Questions: <span id="totalQuestions">0</span></div>
+          <div>Sound: <span id="soundState">On</span></div>
+        </div>
+      </section>
+
+      <!-- QUIZ -->
+      <section id="quiz" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>Quiz Mode — <span id="quizCount">0</span> Q</div>
+          <div class="timer">Time: <span id="quizTimer">00:00</span></div>
+        </div>
+
+        <div class="card">
+          <div id="quizQ" class="question"></div>
+          <div id="quizOpts" class="opts"></div>
+          <div id="quizExplain" class="explain hidden"></div>
+        </div>
+
+        <div class="panel-controls">
+          <button class="btn" onclick="skipQ()">Skip</button>
+          <button class="btn ghost" onclick="endQuiz()">End</button>
+        </div>
+      </section>
+
+      <!-- SUBNET -->
+      <section id="subnet" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>Subnetting Challenges</div>
+        </div>
+
+        <div id="subnetCard" class="card">
+          <div id="subnetQ" class="question"></div>
+          <input id="subnetAns" placeholder="Enter answer (e.g. 255.255.255.192)" class="input"/>
+          <div class="small"><button class="btn" onclick="checkSubnet()">Check</button> <button class="btn ghost" onclick="nextSubnet()">Next</button></div>
+          <div id="subnetFeedback" class="explain hidden"></div>
+        </div>
+      </section>
+
+      <!-- LABS -->
+      <section id="labs" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>CLI Labs</div>
+        </div>
+
+        <div class="card">
+          <div id="labScenario" class="question"></div>
+          <div id="terminal" class="terminal" aria-live="polite"></div>
+          <textarea id="cliInput" class="textarea" placeholder="Enter CLI commands — multi-line supported"></textarea>
+          <div class="small">
+            <button class="btn" onclick="runCLI()">Run</button>
+            <button class="btn ghost" onclick="clearTerminal()">Clear</button>
+            <button class="btn" onclick="verifyLab()">Verify</button>
+          </div>
+          <div id="labFeedback" class="explain hidden"></div>
+        </div>
+      </section>
+
+      <!-- DRAG -->
+      <section id="drag" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>Drag & Drop</div>
+        </div>
+
+        <div id="dragCard" class="card">
+          <div id="dragQ" class="question"></div>
+          <div id="dragArea" class="drag-area"></div>
+          <div id="dragFeedback" class="explain hidden"></div>
+          <div class="small"><button class="btn" onclick="nextDrag()">Next</button></div>
+        </div>
+      </section>
+
+      <!-- SIM -->
+      <section id="sim" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>Simulations</div>
+        </div>
+
+        <div id="simCard" class="card">
+          <div id="simQ" class="question"></div>
+          <div id="simTasks"></div>
+          <div class="small"><button class="btn" onclick="startSim()">Start</button> <button class="btn ghost" onclick="nextSim()">Next</button></div>
+          <div id="simFeedback" class="explain hidden"></div>
+        </div>
+      </section>
+
+      <!-- TROUBLE -->
+      <section id="trbl" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>Troubleshooting Scenarios</div>
+        </div>
+
+        <div id="trblCard" class="card">
+          <div id="trblQ" class="question"></div>
+          <div id="trblDetails"></div>
+          <div class="small"><button class="btn" onclick="nextTrbl()">Next</button></div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <small>Built for offline use • Drop updated /data.json into repo root to change content</small>
+    </footer>
+  </div>
+
+  <!-- Embedded audio (short beeps) -->
+  <audio id="sClick"><source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
+  <audio id="sCorrect"><source src="data:audio/wav;base64,UklGRlQAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
+  <audio id="sWrong"><source src="data:audio/wav;base64,UklGRrQAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
+
+  <script src="/script.js" defer></script>
 </body>
 </html>
