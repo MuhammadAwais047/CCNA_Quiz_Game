@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CCNA Mastery</title>
+  <link rel="manifest" href="data:application/manifest+json,{
+    \"name\": \"CCNA Mastery\", \"short_name\": \"CCNA\",
+    \"start_url\": \".\", \"display\": \"standalone\",
+    \"background_color\": \"#1a1a2e\", \"theme_color\": \"#00d4ff\",
+    \"icons\": [
+      {\"src\": \"https://img.icons8.com/fluency/96/cisco.png\", \"sizes\": \"96x96\", \"type\": \"image/png\"},
+      {\"src\": \"https://img.icons8.com/fluency/192/cisco.png\", \"sizes\": \"192x192\", \"type\": \"image/png\"},
+      {\"src\": \"https://img.icons8.com/fluency/512/cisco.png\", \"sizes\": \"512x512\", \"type\": \"image/png\"}
+    ]
+  }">
+  <style>
+    :root { --bg: #1a1a2e; --card: #16213e; --accent: #00d4ff; --text: #eee; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family: system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 16px; }
+    #app { max-width: 900px; margin: auto; background: var(--card); border-radius: 16px; padding: 20px; box-shadow: 0 0 20px rgba(0,123,255,.3); }
+    h1 { text-align: center; color: var(--accent); font-size: 1.8em; }
+    .subtitle { text-align: center; color: #aaa; font-size: .9em; }
+    button, input, select { width: 100%; padding: 12px; margin: 8px 0; border: none; border-radius: 8px; font-size: 1em; }
+    button { background: var(--accent); color: #16213e; font-weight: bold; cursor: pointer; }
+    button:hover { filter: brightness(1.1); }
+    .card { background: #0f3460; padding: 16px; margin: 12px 0; border-radius: 12px; }
+    #cli { background: #000; color: #0f0; font-family: monospace; padding: 12px; height: 180px; overflow-y: auto; border-radius: 8px; font-size: .85em; }
+    .hidden { display: none; }
+    #score { text-align: center; font-weight: bold; color: #ffd700; margin: 12px 0; }
+    .progress { height: 6px; background: #333; border-radius: 3px; margin: 8px 0; overflow: hidden; }
+    .bar { height: 100%; background: var(--accent); width: 0; transition: .3s; }
+    .correct { background: #d4edda; color: #155724; padding: 10px; border-radius: 6px; }
+    .incorrect { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 6px; }
+    #leaderboard { background: #0f3460; padding: 12px; border-radius: 8px; margin-top: 12px; font-size: .9em; }
+    #leaderboard ol { margin-left: 20px; }
+    .install { background: #28a745; color: white; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>CCNA Mastery</h1>
+    <p class="subtitle">Quiz • Subnet • 15 Labs • Offline</p>
+
+    <div id="install" class="card hidden">
+      <button id="installBtn" class="install">Install App</button>
+    </div>
+
+    <div id="menu">
+      <button onclick="start('quiz')">Quiz Mode</button>
+      <button onclick="start('subnet')">Subnetting</button>
+      <button onclick="start('lab')">CLI Labs (15)</button>
+      <input type="file" id="file" accept=".json" onchange="loadFile(event)">
+      <small style="color:#aaa">Upload custom labs</small>
+    </div>
+
+    <!-- MODES -->
+    <div id="quiz" class="card hidden">
+      <div class="progress"><div id="qbar" class="bar"></div></div>
+      <h3 id="question"></h3>
+      <div id="options"></div>
+      <button onclick="checkQuiz()">Submit</button>
+      <div id="exp" class="hidden"></div>
+      <button id="nextQ" class="hidden" onclick="nextQuiz()">Next</button>
+    </div>
+
+    <div id="subnet" class="card hidden">
+      <p id="prompt"></p>
+      <input id="answer" placeholder="e.g. 192.168.1.0/25">
+      <button onclick="checkSubnet()">Check</button>
+      <div id="result"></div>
+      <button id="nextS" class="hidden" onclick="nextSubnet()">Next</button>
+    </div>
+
+    <div id="lab" class="card hidden">
+      <select id="labSelect" onchange="loadLab()"></select>
+      <p id="scenario" style="margin:12px 0"></p>
+      <div id="cli"></div>
+      <input id="cmd" placeholder="Enter command..." onkeydown="if(event.key==='Enter')run()">
+      <button onclick="run()">Run</button>
+      <button onclick="showSol()">Solution</button>
+      <div id="feedback"></div>
+    </div>
+
+    <div id="score">Score: <span id="pts">0</span> | Streak: <span id="strk">0</span></div>
+    <div id="leaderboard" class="hidden"></div>
+  </div>
+
+  <script>
+    // === PWA + OFFLINE ===
+    let prompt;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault(); prompt = e;
+      document.getElementById('install').classList.remove('hidden');
+    });
+    document.getElementById('installBtn').onclick = () => {
+      document.getElementById('install').classList.add('hidden');
+      prompt.prompt();
+    };
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
+        const CACHE = 'ccna-v1';
+        self.addEventListener('install', e => e.waitUntil(
+          caches.open(CACHE).then(c => c.addAll(['.']))
+        ));
+        self.addEventListener('fetch', e => e.respondWith(
+          caches.match(e.request).then(r => r || fetch(e.request))
+        ));
+      `));
+    }
+
+    // === DATA ===
+    const questions = [
+      {q:"Class C mask?", o:["255.0.0.0","255.255.0.0","255.255.255.0"], a:2, e:"/24"},
+      {q:"IP to MAC?", o:["DHCP","DNS","ARP"], a:2, e:"ARP"}
+    ];
+    const subnets = [
+      {q:"192.168.1.0/24 → 100 hosts", a:"192.168.1.0/25", e:"2^7=128 → /25"},
+      {q:"10.0.0.0/8 → 500 hosts", a:"10.0.0.0/23", e:"2^9=512 → /23"}
+    ];
+    const labs = [
+      {n:"VLAN Trunk", s:"Fix trunk", c:"SW1# ", sol:"switchport mode trunk", f:"Trunk up!"},
+      {n:"OSPF Adjacency", s:"Fix OSPF", c:"R1# ", sol:"network 10.0.0.0 0.0.0.3 area 0", f:"Adjacency!"},
+      {n:"Static NAT", s:"Map server", c:"R1(config)# ", sol:"ip nat inside source static 192.168.1.10 200.0.0.10", f:"Mapped!"},
+      {n:"PAT", s:"Enable overload", c:"R1(config)# ", sol:"ip nat inside source list 1 interface g0/1 overload", f:"PAT active!"},
+      {n:"ACL HTTP", s:"Block web", c:"R1(config)# ", sol:"access-list 100 deny tcp any any eq 80", f:"Blocked!"}
+    ];
+
+    // === STATE ===
+    let mode='', idx=0, score=0, streak=0, labIdx=0;
+    const sound = (ok) => new Audio(ok ? 'https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3' : 'https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-947.mp3').play().catch(()=>{});
+
+    // === LEADERBOARD ===
+    const updateLB = () => {
+      const lb = JSON.parse(localStorage.getItem('ccna-lb')||'[]');
+      if (score > 0) lb.push({s:score, d:new Date().toLocaleString()});
+      lb.sort((a,b)=>b.s-a.s).splice(10);
+      localStorage.setItem('ccna-lb', JSON.stringify(lb));
+      const el = document.getElementById('leaderboard');
+      el.innerHTML = '<strong>Top 10</strong><ol>' + lb.map(x=>`<li>${x.s} pts – ${x.d}</li>`).join('') + '</ol>';
+      el.classList.remove('hidden');
+    };
+
+    // === CORE ===
+    const start = m => {
+      mode=m; idx=0; score=0; streak=0;
+      hideAll(); document.getElementById(m).classList.remove('hidden');
+      updateScore();
+      m==='lab' ? (populateLabs(), loadLab()) : loadQ();
+    };
+
+    const hideAll = () => ['menu','quiz','subnet','lab'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+    const updateScore = () => { document.getElementById('pts').textContent=score; document.getElementById('strk').textContent=streak; };
+
+    // === QUIZ ===
+    const loadQ = () => {
+      const q = questions[idx%questions.length];
+      document.getElementById('question').textContent = q.q;
+      const opts = document.getElementById('options');
+      opts.innerHTML = '';
+      q.o.forEach((o,i) => {
+        const b = document.createElement('button');
+        b.textContent = o; b.onclick = () => checkQuiz(i);
+        opts.appendChild(b);
+      });
+      document.getElementById('qbar').style.width = (idx/questions.length*100)+'%';
+    };
+
+    const checkQuiz = sel => {
+      const q = questions[idx%questions.length];
+      const correct = sel === q.a;
+      if (correct) { score+=10; streak++; sound(true); } else { streak=0; sound(false); }
+      updateScore();
+      document.getElementById('exp').textContent = q.e;
+      document.getElementById('exp').classList.remove('hidden');
+      document.getElementById('nextQ').classList.remove('hidden');
+      idx++;
+    };
+
+    const nextQuiz = () => { document.getElementById('exp').classList.add('hidden'); document.getElementById('nextQ').classList.add('hidden'); loadQ(); };
+
+    // === SUBNET ===
+    const loadSubnet = () => {
+      const c = subnets[idx%subnets.length];
+      document.getElementById('prompt').textContent = c.q;
+      document.getElementById('answer').value = '';
+    };
+
+    const checkSubnet = () => {
+      const ans = document.getElementById('answer').value.trim();
+      const c = subnets[idx%subnets.length];
+      const ok = ans === c.a;
+      if (ok) { score+=20; streak++; sound(true); } else { streak=0; sound(false); }
+      updateScore();
+      document.getElementById('result').innerHTML = ok ? `<div class="correct">Correct! ${c.e}</div>` : `<div class="incorrect">Wrong: ${c.a}<br>${c.e}</div>`;
+      document.getElementById('nextS').classList.remove('hidden');
+      idx++;
+    };
+
+    const nextSubnet = () => { document.getElementById('nextS').classList.add('hidden'); loadSubnet(); };
+
+    // === LAB ===
+    const populateLabs = () => {
+      const s = document.getElementById('labSelect');
+      s.innerHTML = labs.map((l,i)=>`<option value="${i}">${l.n}</option>`).join('');
+    };
+
+    const loadLab = () => {
+      labIdx = document.getElementById('labSelect').value;
+      const l = labs[labIdx];
+      document.getElementById('scenario').textContent = l.s;
+      document.getElementById('cli').innerHTML = l.c;
+      document.getElementById('cmd').value = '';
+      document.getElementById('feedback').textContent = '';
+    };
+
+    const run = () => {
+      const cmd = document.getElementById('cmd').value.trim().toLowerCase();
+      const cli = document.getElementById('cli');
+      cli.innerHTML += cmd + '<br>'; cli.scrollTop = cli.scrollHeight;
+      const l = labs[labIdx];
+      if (cmd.includes(l.sol.toLowerCase().split('\n')[0])) {
+        score += 30; streak++; sound(true);
+        document.getElementById('feedback').innerHTML = `<div class="correct">${l.f}</div>`;
+      } else {
+        sound(false);
+        document.getElementById('feedback').innerHTML = `<div class="incorrect">Try again!</div>`;
+      }
+      updateScore();
+      document.getElementById('cmd').value = '';
+    };
+
+    const showSol = () => {
+      document.getElementById('feedback').innerHTML = `<code>${labs[labIdx].sol.replace(/\n/g,'<br>')}</code>`;
+    };
+
+    // === FILE UPLOAD ===
+    const loadFile = e => {
+      const f = e.target.files[0];
+      const r = new FileReader();
+      r.onload = ev => {
+        const d = JSON.parse(ev.target.result);
+        if (d.labs) { labs.push(...d.labs); populateLabs(); alert(`Loaded! ${labs.length} labs`); }
+      };
+      r.readAsText(f);
+    };
+
+    // === INIT ===
+    updateLB();
+  </script>
+</body>
+</html>
