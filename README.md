@@ -1,40 +1,18 @@
-# CCNA_Quiz_Game
-For CCNA Exam Preparation
-src/
-├── core/
-│   ├── app.js               # Application bootstrap
-│   ├── state.js             # State management
-│   ├── storage.js           # Local storage abstraction
-│   └── audio.js             # Audio system
-├── modules/
-│   ├── quiz/
-│   │   ├── quiz-engine.js
-│   │   ├── quiz-view.js
-│   │   └── quiz-styles.css
-│   ├── subnetting/
-│   ├── cli-simulator/
-│   ├── drag-drop/
-│   └── troubleshooting/
-├── data/
-│   ├── questions.js         # Dynamic data loading
-│   └── schemas.js           # Data validation
-├── ui/
-│   ├── components/          # Reusable components
-│   ├── layout/              # Layout system
-│   └── theme.js             # Theme management
-├── pwa/
-│   ├── service-worker.js
-│   ├── manifest.js
-│   └── offline.js
-├── utils/
-│   ├── network.js
-│   ├── accessibility.js
-│   └── analytics.js
-└── app.css                  # Main styles
-public/
-├── assets/
-│   ├── audio/
-│   ├── icons/
-│   └── images/
-├── index.html
-└── version.json
+CCNA_QUIZ_GAME
+
+├── index.html                 (your main entry point with redirect)
+├── ccna-mastery-pro.html      (your main application)
+├── data.json                  (consolidated data file)
+├── app.css                    (separate CSS file)
+├── app.js                     (separate JavaScript file)
+├── sw.js                      (service worker file)
+├── manifest.json              (manifest file)
+└── assets/
+    ├── audio/
+    │   ├── correct.mp3
+    │   ├── incorrect.mp3
+    │   ├── success.mp3
+    │   └── click.mp3
+    └── icons/
+        ├── icon-192.png
+        └── icon-512.png
