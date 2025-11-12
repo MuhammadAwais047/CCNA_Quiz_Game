@@ -3,9 +3,8 @@ const CACHE_NAME = 'ccna-mastery-pro-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/app.css',
-  '/app.js',
-  '/data.json'
+  '/ccna-mastery-pro.html',
+  '/manifest.json'
 ];
 
 // Install service worker and cache files
@@ -38,15 +37,6 @@ self.addEventListener('fetch', event => {
   // Skip cross-origin requests
   if (event.request.url.startsWith('http') && 
       !event.request.url.startsWith(self.location.origin)) {
-    return;
-  }
-  
-  // For data.json, use network-first with cache fallback
-  if (event.request.url.includes('data.json')) {
-    event.respondWith(
-      fetch(event.request)
-        .catch(() => caches.match(event.request))
-    );
     return;
   }
   
