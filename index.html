@@ -32,6 +32,8 @@
           <button class="mode-btn" data-mode="drag">Drag & Drop</button>
           <button class="mode-btn" data-mode="sim">Simulations</button>
           <button class="mode-btn" data-mode="trbl">Troubleshooting</button>
+          <button class="btn" onclick="toggleMusic()">🎵 Music</button>
+
         </div>
         <div class="menu-stats">
           <div>Questions: <span id="totalQuestions">0</span></div>
@@ -149,7 +151,12 @@
   <audio id="sClick"><source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
   <audio id="sCorrect"><source src="data:audio/wav;base64,UklGRlQAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
   <audio id="sWrong"><source src="data:audio/wav;base64,UklGRrQAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
+<!-- Background music (auto-loop) -->
+<audio id="bgMusic" loop autoplay volume="0.3">
+  <source src="data:audio/mp3;base64,PASTE_YOUR_MUSIC_BASE64_HERE" type="audio/mp3">
+</audio>
 
   <script src="/script.js" defer></script>
 </body>
 </html>
+
