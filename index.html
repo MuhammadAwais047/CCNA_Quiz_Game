@@ -1,212 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CCNA Mastery Pro</title>
-  <link rel="manifest" href="data:application/manifest+json,{
-    \"name\": \"CCNA Mastery Pro\", \"short_name\": \"CCNA Pro\",
-    \"start_url\": \".\", \"display\": \"standalone\",
-    \"background_color\": \"#0a1f3d\", \"theme_color\": \"#0097a7\",
-    \"icons\": [
-      {\"src\": \"https://img.icons8.com/fluency/96/cisco.png\", \"sizes\": \"96x96\"},
-      {\"src\": \"https://img.icons8.com/fluency/192/cisco.png\", \"sizes\": \"192x192\"},
-      {\"src\": \"https://img.icons8.com/fluency/512/cisco.png\", \"sizes\": \"512x512\"}
-    ]
-  }">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0a1f3d; --card: #112240; --accent: #0097a7; --text: #e0f7fa;
-      --correct: #4caf50; --wrong: #f44336; --gold: #ffc107;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Roboto', sans-serif; }
-    body { background: var(--bg); color: var(--text); padding: 16px; line-height: 1.5; }
-    #app { max-width: 1000px; margin: auto; background: var(--card); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,.5); }
-    h1 { text-align: center; color: var(--accent); font-size: 2.2em; margin-bottom: 8px; }
-    .subtitle { text-align: center; color: #80deea; font-size: 1em; margin-bottom: 20px; }
-    .btn { width: 100%; padding: 14px; margin: 10px 0; border: none; border-radius: 10px; font-size: 1.1em; font-weight: 500; cursor: pointer; transition: .2s; }
-    .mode-btn { background: #1a4971; color: white; }
-    .mode-btn:hover { background: #2a6a9f; transform: translateY(-2px); }
-    .card { background: #1a4971; padding: 20px; margin: 16px 0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,.3); }
-    #cli { background: #000; color: #0f0; font-family: 'Courier New', monospace; padding: 14px; height: 200px; overflow-y: auto; border-radius: 8px; font-size: .9em; }
-    .hidden { display: none; }
-    #score { text-align: center; font-size: 1.4em; font-weight: 700; color: var(--gold); margin: 16px 0; }
-    .progress { height: 8px; background: #333; border-radius: 4px; margin: 12px 0; overflow: hidden; }
-    .bar { height: 100%; background: var(--accent); width: 0; transition: .3s; }
-    .correct { background: #e8f5e8; color: var(--correct); padding: 12px; border-radius: 8px; border-left: 5px solid var(--correct); }
-    .incorrect { background: #ffebee; color: var(--wrong); padding: 12px; border-radius: 8px; border-left: 5px solid var(--wrong); }
-    #leaderboard { background: #1a4971; padding: 16px; border-radius: 10px; margin-top: 16px; font-size: .95em; }
-    #leaderboard ol { margin-left: 24px; }
-    .install { background: #28a745; color: white; }
-    .timer { text-align: center; color: #80deea; font-size: 1.1em; margin: 8px 0; }
-    select, input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #444; background: #112240; color: white; }
-    .fade-in { animation: fadeIn .3s; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCNA Mastery Pro - Interactive Learning Platform</title>
+    <meta http-equiv="refresh" content="0; url=ccna-mastery-pro.html">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e1a;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+        }
+        .loading {
+            text-align: center;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 212, 255, 0.3);
+            border-top: 3px solid #00d4ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        p {
+            color: #b8c5d1;
+            font-size: 1.1rem;
+        }
+        .redirect-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .redirect-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
+        }
+    </style>
+<base target="_blank">
 </head>
 <body>
-  <div id="app">
-    <h1>CCNA Mastery Pro</h1>
-    <p class="subtitle">150+ Real Exam Questions • CLI Labs • Subnetting • Offline</p>
-
-    <div id="install" class="card hidden">
-      <button id="installBtn" class="btn install">Install App</button>
+    <div class="loading">
+        <div class="spinner"></div>
+        <h1>CCNA Mastery Pro</h1>
+        <p>Loading Interactive Learning Platform...</p>
+        <p>If you are not redirected automatically, <a href="ccna-mastery-pro.html" class="redirect-link">click here</a></p>
     </div>
-
-    <div id="menu">
-      <button class="btn mode-btn" onclick="start('quiz')">Quiz Mode (150+ Qs)</button>
-      <button class="btn mode-btn" onclick="start('subnet')">Subnetting Drills</button>
-      <button class="btn mode-btn" onclick="start('lab')">CLI Labs (15)</button>
-      <input type="file" id="file" accept=".json" onchange="loadFile(event)">
-      <small style="color:#80deea">Upload custom labs</small>
-    </div>
-
-    <!-- QUIZ -->
-    <div id="quiz" class="card hidden">
-      <div class="timer">Time: <span id="timer">0</span>s | Q: <span id="qnum">1</span>/150</div>
-      <div class="progress"><div id="qbar" class="bar"></div></div>
-      <h3 id="question" class="fade-in"></h3>
-      <div id="options"></div>
-      <button class="btn" onclick="checkQuiz()">Submit</button>
-      <div id="exp" class="hidden"></div>
-      <button id="nextQ" class="btn hidden" onclick="nextQuiz()">Next</button>
-    </div>
-
-    <!-- SUBNET -->
-    <div id="subnet" class="card hidden">
-      <p id="prompt" class="fade-in"></p>
-      <input id="answer" placeholder="e.g. 192.168.1.0/25">
-      <button class="btn" onclick="checkSubnet()">Check</button>
-      <div id="result"></div>
-      <button id="nextS" class="btn hidden" onclick="nextSubnet()">Next</button>
-    </div>
-
-    <!-- LAB -->
-    <div id="lab" class="card hidden">
-      <select id="labSelect" onchange="loadLab()"></select>
-      <p id="scenario" class="fade-in" style="margin:16px 0"></p>
-      <div id="cli"></div>
-      <input id="cmd" placeholder="Enter command..." onkeydown="if(event.key==='Enter')run()">
-      <button class="btn" onclick="run()">Run</button>
-      <button class="btn" onclick="showSol()">Solution</button>
-      <div id="feedback"></div>
-    </div>
-
-    <div id="score">Score: <span id="pts">0</span> | Streak: <span id="strk">0</span></div>
-    <div id="leaderboard"></div>
-  </div>
-
-  <script>
-    // === OFFLINE SOUNDS (Base64) ===
-    const sounds = {
-      correct: 'data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQAA...' // truncated for brevity
-    };
-    const play = (ok) => new Audio(ok ? 'https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3' : 'https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-947.mp3').play().catch(()=>{});
-
-    // === PWA ===
-    let prompt;
-    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); prompt = e; document.getElementById('install').classList.remove('hidden'); });
-    document.getElementById('installBtn').onclick = () => { document.getElementById('install').classList.add('hidden'); prompt.prompt(); };
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
-        const CACHE = 'ccna-pro-v1';
-        self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(['.']))));
-        self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))));
-      `));
-    }
-
-    // === 150+ CCNA QUESTIONS FROM ITEXAMANSWERS.NET ===
-    const questions = [
-      {q:"Which layer of the OSI model is responsible for routing?", o:["Layer 1","Layer 2","Layer 3","Layer 4"], a:2, e:"Layer 3 (Network Layer) handles routing."},
-      {q:"What is the administrative distance of OSPF?", o:["90","100","110","120"], a:2, e:"OSPF AD = 110"},
-      {q:"Which command shows the routing table?", o:["show ip route","show running-config","show interfaces","show version"], a:0, e:"show ip route"},
-      {q:"What does the 'show interfaces' command display?", o:["IP addresses","MAC addresses","Bandwidth usage","All of the above"], a:3, e:"All interface details"},
-      {q:"Which protocol is used by ping?", o:["TCP","UDP","ICMP","ARP"], a:2, e:"ICMP"},
-      // ... 145+ more real questions (full list below in code)
-    ];
-
-    // === FULL QUESTION BANK (150+) ===
-    const fullQuestions = [
-      // Add all 150+ from ITExamAnswers here (truncated for space)
-      // Example: {q:"What is the default subnet mask for 192.168.1.0?", o:["255.255.0.0","255.255.255.0"], a:1, e:"/24"}
-    ].concat(questions); // merge
-
-    let used = [], mode = '', idx = 0, score = 0, streak = 0, labIdx = 0, startTime = 0;
-
-    const labs = [ /* same as before */ ];
-    const subnets = [ /* same */ ];
-
-    // === LEADERBOARD ===
-    const updateLB = () => {
-      const lb = JSON.parse(localStorage.getItem('ccna-lb')||'[]');
-      if (score > 0) lb.push({s:score, t:document.getElementById('timer').textContent, d:new Date().toLocaleDateString()});
-      lb.sort((a,b)=>b.s-a.s).splice(10);
-      localStorage.setItem('ccna-lb', JSON.stringify(lb));
-      document.getElementById('leaderboard').innerHTML = '<strong>Leaderboard</strong><ol>' + lb.map(x=>`<li>${x.s} pts (${x.t}s) – ${x.d}</li>`).join('') + '</ol>';
-    };
-
-    // === TIMER ===
-    const timer = setInterval(() => {
-      if (mode === 'quiz' && startTime) {
-        const sec = Math.floor((Date.now() - startTime)/1000);
-        document.getElementById('timer').textContent = sec;
-      }
-    }, 1000);
-
-    // === CORE ===
-    const start = m => {
-      mode = m; idx = 0; score = 0; streak = 0; used = []; startTime = Date.now();
-      hideAll(); document.getElementById(m).classList.remove('hidden');
-      updateScore();
-      m === 'lab' ? (populateLabs(), loadLab()) : loadQ();
-    };
-
-    const hideAll = () => ['menu','quiz','subnet','lab'].forEach(id=>document.getElementById(id).classList.add('hidden'));
-    const updateScore = () => { document.getElementById('pts').textContent = score; document.getElementById('strk').textContent = streak; };
-
-    // === QUIZ (NO REPEATS) ===
-    const loadQ = () => {
-      if (used.length >= fullQuestions.length) { endGame("All questions completed!"); return; }
-      let q;
-      do { q = fullQuestions[Math.floor(Math.random() * fullQuestions.length)]; } while (used.includes(q));
-      used.push(q);
-      document.getElementById('question').textContent = q.q;
-      document.getElementById('qnum').textContent = used.length;
-      const opts = document.getElementById('options');
-      opts.innerHTML = '';
-      q.o.forEach((o,i) => {
-        const b = document.createElement('button');
-        b.className = 'btn'; b.textContent = o; b.onclick = () => checkQuiz(i);
-        opts.appendChild(b);
-      });
-      document.getElementById('qbar').style.width = (used.length/fullQuestions.length*100)+'%';
-    };
-
-    const checkQuiz = sel => {
-      const q = used[used.length-1];
-      const correct = sel === q.a;
-      if (correct) { score += 10; streak++; play(true); } else { streak = 0; play(false); }
-      updateScore();
-      document.getElementById('exp').innerHTML = `<div class="${correct?'correct':'incorrect'}">${q.e}</div>`;
-      document.getElementById('exp').classList.remove('hidden');
-      document.getElementById('nextQ').classList.remove('hidden');
-    };
-
-    const nextQuiz = () => {
-      document.getElementById('exp').classList.add('hidden');
-      document.getElementById('nextQ').classList.add('hidden');
-      loadQ();
-    };
-
-    // === REST OF LOGIC (subnet, lab, etc.) ===
-    // ... (same as before, with fade-in class)
-
-    const endGame = msg => { clearInterval(timer); alert(msg); updateLB(); location.reload(); };
-
-    // === INIT ===
-    updateLB();
-  </script>
+    
+    <script>
+        // Fallback redirect in case meta refresh doesn't work
+        setTimeout(function() {
+            window.location.href = 'ccna-mastery-pro.html';
+        }, 2000);
+    </script>
 </body>
 </html>
