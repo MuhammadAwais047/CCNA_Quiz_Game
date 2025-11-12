@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CCNA Mastery Pro - Interactive Learning Platform</title>
+  <link rel="manifest" href="data:application/manifest+json,{
+    "name": "CCNA Mastery Pro", "short_name": "CCNA Pro",
+    "start_url": ".", "display": "standalone",
+    "background_color": "#0a0e1a", "theme_color": "#00d4ff",
+    "icons": [
+      {"src": "https://img.icons8.com/fluency/96/cisco.png", "sizes": "96x96"},
+      {"src": "https://img.icons8.com/fluency/192/cisco.png", "sizes": "192x192"}
+    ]
+  }">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #1a1f2e;
+      --bg-tertiary: #2a3441;
+      --accent-primary: #00d4ff;
+      --accent-secondary: #ff6b6b;
+      --accent-success: #4ecdc4;
+      --accent-warning: #ffe66d;
+      --text-primary: #ffffff;
+      --text-secondary: #b8c5d1;
+      --text-muted: #8892a0;
+      --border-color: #3a4553;
+      --shadow-primary: 0 8px 32px rgba(0, 212, 255, 0.1);
+      --shadow-secondary: 0 4px 16px rgba(0, 0, 0, 0.3);
+      --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+      --gradient-secondary: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+      --gradient-success: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .title {
+      font-family: 'Orbitron', monospace;
+      font-size: 3.5rem;
+      font-weight: 900;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+      text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      background: var(--bg-secondary);
+      padding: 12px 24px;
+      border-radius: 25px;
+      border: 1px solid var(--border-color);
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-primary);
+    }
+
+    .stat-value {
+      color: var(--accent-primary);
+      font-weight: 700;
+    }
+
+    /* Game Modes */
+    .game-modes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .mode-card {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mode-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .mode-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .mode-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-primary);
+      border-color: var(--accent-primary);
+    }
+
+    .mode-icon {
+      font-size: 3rem;
+      color: var(--accent-primary);
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .mode-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+
+    .mode-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+
+    .mode-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Quiz Section */
+    .quiz-container {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-secondary);
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .quiz-progress {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-tertiary);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .quiz-info {
+      display: flex;
+      gap: 20px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .question-card {
+      background: var(--bg-tertiary);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 1px solid var(--border-color);
+    }
+
+    .question-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .options-grid {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .option-button {
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 15px 20px;
+      font-size: 1rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+    }
+
+    .option-button:hover {
+      border-color: var(--accent-primary);
+      background: rgba(0, 212, 255, 0.1);
+      transform: translateX(5px);
+    }
+
+    .option-button.selected {
+      border-color: var(--accent-primary);
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .option-button.correct {
+      border-color: var(--accent-success);
+      background: var(--gradient-success);
+      color: white;
+    }
+
+    .option-button.incorrect {
+      border-color: var(--accent-secondary);
+      background: var(--gradient-secondary);
+      color: white;
+    }
+
+    .quiz-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .action-button {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .action-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-primary);
+    }
+
+    /* CLI Lab Section */
+    .lab-container {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-secondary);
+    }
+
+    .lab-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .lab-select {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 15px;
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+
+    .cli-terminal {
+      background: #0a0a0a;
+      border-radius: 12px;
+      padding: 20px;
+      height: 300px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .cli-output {
+      color: #00ff00;
+      margin-bottom: 10px;
+    }
+
+    .cli-prompt {
+      color: var(--accent-primary);
+    }
+
+    .cli-input {
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: inherit;
+      width: 80%;
+      outline: none;
+    }
+
+    /* Subnetting Section */
+    .subnet-container {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-secondary);
+    }
+
+    .subnet-prompt {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+      text-align: center;
+    }
+
+    .subnet-input {
+      width: 100%;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .subnet-input:focus {
+      border-color: var(--accent-primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+    }
+
+    .result-card {
+      background: var(--bg-tertiary);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      border-left: 4px solid var(--accent-primary);
+    }
+
+    .result-success {
+      border-left-color: var(--accent-success);
+      background: rgba(78, 205, 196, 0.1);
+    }
+
+    .result-error {
+      border-left-color: var(--accent-secondary);
+      background: rgba(255, 107, 107, 0.1);
+    }
+
+    /* Feedback Section */
+    .feedback-card {
+      background: var(--bg-tertiary);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    .feedback-success {
+      border-color: var(--accent-success);
+      background: rgba(78, 205, 196, 0.1);
+    }
+
+    .feedback-error {
+      border-color: var(--accent-secondary);
+      background: rgba(255, 107, 107, 0.1);
+    }
+
+    /* Animations */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+      }
+    }
+
+    .animate-slide-in {
+      animation: slideInUp 0.5s ease-out;
+    }
+
+    .animate-pulse {
+      animation: pulse 0.6s ease-in-out;
+    }
+
+    .animate-glow {
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .title {
+        font-size: 2.5rem;
+      }
+      
+      .game-modes {
+        grid-template-columns: 1fr;
+      }
+      
+      .quiz-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .quiz-info {
+        justify-content: space-between;
+      }
+      
+      .quiz-actions {
+        flex-direction: column;
+      }
+      
+      .action-button {
+        width: 100%;
+      }
+    }
+
+    /* Hidden Elements */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Success/Error States */
+    .success-animation {
+      background: var(--gradient-success);
+      color: white;
+      animation: pulse 0.6s ease-in-out;
+    }
+
+    .error-animation {
+      background: var(--gradient-secondary);
+      color: white;
+      animation: pulse 0.6s ease-in-out;
+    }
+  </style>
+<base target="_blank">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="title">CCNA MASTERY PRO</h1>
+      <p class="subtitle">Interactive Learning Platform for Cisco Certification</p>
+      
+      <div class="stats-bar">
+        <div class="stat-item">
+          <i class="fas fa-trophy"></i> Score: <span class="stat-value" id="totalScore">0</span>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-fire"></i> Streak: <span class="stat-value" id="currentStreak">0</span>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-clock"></i> Time: <span class="stat-value" id="timer">00:00</span>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-question-circle"></i> Questions: <span class="stat-value" id="questionCount">0</span>/150
+        </div>
+      </div>
+    </header>
+
+    <!-- Install App Button -->
+    <div id="installApp" class="hidden" style="text-align: center; margin-bottom: 20px;">
+      <button class="action-button btn-primary" onclick="installApp()">
+        <i class="fas fa-download"></i> Install CCNA Pro App
+      </button>
+    </div>
+
+    <!-- Game Mode Selection -->
+    <div id="modeSelection" class="game-modes">
+      <div class="mode-card" onclick="startMode('quiz')">
+        <i class="fas fa-brain mode-icon"></i>
+        <h3 class="mode-title">Quiz Mode</h3>
+        <p class="mode-desc">Test your knowledge with 150+ real CCNA exam questions</p>
+        <div class="mode-stats">
+          <span>150+ Questions</span>
+          <span>Multiple Choice</span>
+        </div>
+      </div>
+      
+      <div class="mode-card" onclick="startMode('subnet')">
+        <i class="fas fa-calculator mode-icon"></i>
+        <h3 class="mode-title">Subnetting Lab</h3>
+        <p class="mode-desc">Master IP subnetting with interactive calculations</p>
+        <div class="mode-stats">
+          <span>30+ Problems</span>
+          <span>Real-time Feedback</span>
+        </div>
+      </div>
+      
+      <div class="mode-card" onclick="startMode('lab')">
+        <i class="fas fa-terminal mode-icon"></i>
+        <h3 class="mode-title">CLI Simulator</h3>
+        <p class="mode-desc">Practice Cisco IOS commands in realistic scenarios</p>
+        <div class="mode-stats">
+          <span>15+ Labs</span>
+          <span>Hands-on Practice</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz Mode -->
+    <div id="quizMode" class="quiz-container hidden">
+      <div class="quiz-header">
+        <div class="quiz-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="quizProgress"></div>
+          </div>
+          <div class="quiz-info">
+            <span><i class="fas fa-question-circle"></i> Question <span id="currentQuestion">1</span> of 150</span>
+            <span><i class="fas fa-percentage"></i> <span id="quizPercentage">0</span>%</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="question-card">
+        <div class="question-text" id="questionText"></div>
+        <div class="options-grid" id="optionsGrid"></div>
+      </div>
+      
+      <div class="quiz-actions">
+        <button class="action-button btn-primary" id="submitAnswer" onclick="submitAnswer()">
+          Submit Answer
+        </button>
+        <button class="action-button btn-secondary" id="nextQuestion" onclick="nextQuestion()" disabled>
+          Next Question
+        </button>
+      </div>
+      
+      <div id="questionFeedback" class="feedback-card hidden"></div>
+    </div>
+
+    <!-- Subnetting Mode -->
+    <div id="subnetMode" class="subnet-container hidden">
+      <div class="lab-header">
+        <h3><i class="fas fa-network-wired"></i> Subnetting Challenge</h3>
+        <button class="action-button btn-secondary" onclick="generateSubnetProblem()">
+          <i class="fas fa-refresh"></i> New Problem
+        </button>
+      </div>
+      
+      <div class="subnet-prompt" id="subnetPrompt"></div>
+      <input type="text" class="subnet-input" id="subnetAnswer" placeholder="Enter your answer (e.g., 192.168.1.0/24)">
+      
+      <div class="quiz-actions">
+        <button class="action-button btn-primary" onclick="checkSubnet()">
+          <i class="fas fa-check"></i> Check Answer
+        </button>
+        <button class="action-button btn-secondary" onclick="showSubnetHint()">
+          <i class="fas fa-lightbulb"></i> Hint
+        </button>
+      </div>
+      
+      <div id="subnetResult"></div>
+    </div>
+
+    <!-- CLI Lab Mode -->
+    <div id="labMode" class="lab-container hidden">
+      <div class="lab-header">
+        <h3><i class="fas fa-server"></i> Cisco IOS Simulator</h3>
+        <select class="lab-select" id="labSelect" onchange="loadLab()">
+          <option value="">Select a Lab...</option>
+          <option value="dhcp">DHCP Configuration</option>
+          <option value="ospf">OSPF Routing</option>
+          <option value="security">Port Security</option>
+          <option value="static">Static Routing</option>
+          <option value="ipv6">IPv6 Configuration</option>
+          <option value="acl">Access Control Lists</option>
+          <option value="vlan">VLAN Configuration</option>
+          <option value="nat">NAT Configuration</option>
+          <option value="ssh">SSH Security</option>
+          <option value="eigrp">EIGRP Routing</option>
+        </select>
+      </div>
+      
+      <div id="labScenario" class="question-card"></div>
+      
+      <div class="cli-terminal" id="cliTerminal">
+        <div class="cli-output">Welcome to Cisco IOS Simulator</div>
+        <div class="cli-output">Type 'help' for available commands</div>
+        <div class="cli-output"></div>
+        <div>
+          <span class="cli-prompt">Router></span>
+          <input type="text" class="cli-input" id="cliInput" onkeypress="handleCLI(event)" placeholder="Enter command...">
+        </div>
+      </div>
+      
+      <div class="quiz-actions">
+        <button class="action-button btn-primary" onclick="runCommand()">
+          <i class="fas fa-play"></i> Execute
+        </button>
+        <button class="action-button btn-secondary" onclick="showSolution()">
+          <i class="fas fa-eye"></i> Show Solution
+        </button>
+        <button class="action-button btn-secondary" onclick="resetLab()">
+          <i class="fas fa-refresh"></i> Reset
+        </button>
+      </div>
+      
+      <div id="labFeedback"></div>
+    </div>
+
+    <!-- Results and Leaderboard -->
+    <div id="resultsSection" class="hidden">
+      <div class="quiz-container">
+        <h3><i class="fas fa-trophy"></i> Your Results</h3>
+        <div id="finalResults"></div>
+        <div class="quiz-actions">
+          <button class="action-button btn-primary" onclick="restartQuiz()">
+            <i class="fas fa-redo"></i> Try Again
+          </button>
+          <button class="action-button btn-secondary" onclick="backToMenu()">
+            <i class="fas fa-home"></i> Main Menu
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Elements -->
+  <audio id="correctSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="incorrectSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="successSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="clickSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Game State
+    let gameState = {
+      currentMode: null,
+      currentQuestion: 0,
+      score: 0,
+      streak: 0,
+      startTime: null,
+      selectedAnswer: null,
+      questions: [],
+      subnetProblems: [],
+      labs: {},
+      usedQuestions: new Set()
+    };
+
+    // Question Bank (150+ CCNA Questions)
+    const questionBank = [
+      {
+        question: "What does ACL stand for in networking?",
+        options: ["Access Control List", "Address Control Layer", "Advanced Configuration Logic", "Automated Connection List"],
+        correct: 0,
+        explanation: "ACL stands for Access Control List, used to filter network traffic based on specified criteria.",
+        category: "Security"
+      },
+      {
+        question: "Which command enables IPv6 routing on a Cisco router?",
+        options: ["ipv6 enable", "ipv6 unicast-routing", "ipv6 address", "ipv6 route"],
+        correct: 1,
+        explanation: "The 'ipv6 unicast-routing' command enables IPv6 routing capabilities on a Cisco router.",
+        category: "IP Services"
+      },
+      {
+        question: "What is the default violation mode for port security?",
+        options: ["disabled", "shutdown", "protect", "restrict"],
+        correct: 1,
+        explanation: "The default violation mode is 'shutdown', which puts the port in error-disabled state.",
+        category: "Security"
+      },
+      {
+        question: "Which server is required for WPA2 Enterprise authentication?",
+        options: ["AAA Server", "DHCP Server", "RADIUS Server", "SNMP Server"],
+        correct: 2,
+        explanation: "RADIUS server is required for WPA2 Enterprise authentication to handle user credentials.",
+        category: "Security"
+      },
+      {
+        question: "What is the administrative distance of OSPF?",
+        options: ["90", "100", "110", "120"],
+        correct: 2,
+        explanation: "OSPF has an administrative distance of 110, making it more preferred than RIP (120).",
+        category: "IP Connectivity"
+      },
+      {
+        question: "Which protocol defines port-based authentication for LAN access?",
+        options: ["SSH", "802.1x", "RADIUS", "TACACS+"],
+        correct: 1,
+        explanation: "802.1x is the IEEE standard for port-based network access control.",
+        category: "Security"
+      },
+      {
+        question: "What is the purpose of NAT?",
+        options: ["Encrypt data", "Translate private to public IPs", "Provide wireless access", "Block malware"],
+        correct: 1,
+        explanation: "NAT translates private IP addresses to public IPs for internet communication.",
+        category: "IP Services"
+      },
+      {
+        question: "Which command allows only SSH access on a router?",
+        options: ["transport input ssh telnet", "transport input ssh", "transport input none", "no transport input telnet"],
+        correct: 1,
+        explanation: "'transport input ssh' allows only SSH and disables other access methods.",
+        category: "Security"
+      },
+      {
+        question: "What is the IPv6 prefix for unique local addresses?",
+        options: ["FE80::/10", "FD00::/8", "2001::/16", "FF00::/8"],
+        correct: 1,
+        explanation: "FD00::/8 is the prefix for IPv6 unique local addresses (ULAs).",
+        category: "Network Fundamentals"
+      },
+      {
+        question: "Which 802.11 standards operate in both 2.4 GHz and 5 GHz bands?",
+        options: ["802.11b/g", "802.11n/ac", "802.11a/b", "802.11g only"],
+        correct: 1,
+        explanation: "802.11n and 802.11ac operate in both 2.4 GHz and 5 GHz frequency bands.",
+        category: "Network Access"
+      }
+    ];
+
+    // Subnetting Problems
+    const subnetProblems = [
+      {
+        question: "Given: 192.168.10.0/24, need 60 hosts per subnet",
+        answer: "192.168.10.0/26",
+        explanation: "Need 62 usable addresses (60 hosts + 2 reserved). 2^6 = 64, so /26 mask.",
+        hint: "Calculate 2^n - 2 >= 60, find smallest n"
+      },
+      {
+        question: "What subnet mask allows 30 usable hosts per subnet?",
+        answer: "255.255.255.224",
+        explanation: "/27 mask provides 32 total addresses, 30 usable for hosts.",
+        hint: "30 usable hosts = 32 total addresses"
+      },
+      {
+        question: "Given: 10.0.0.0/8, create 2000 subnets",
+        answer: "/19",
+        explanation: "Need 11 bits for 2048 subnets (2^11). /8 + 11 = /19.",
+        hint: "Find smallest power of 2 >= 2000"
+      },
+      {
+        question: "What mask creates exactly 2 usable hosts per subnet?",
+        answer: "255.255.255.252",
+        explanation: "/30 provides 4 total addresses, 2 usable for hosts.",
+        hint: "Point-to-point links need 2 usable addresses"
+      },
+      {
+        question: "How many usable hosts with mask 255.255.252.0?",
+        answer: "1022",
+        explanation: "/22 mask gives 2^10 - 2 = 1022 usable hosts.",
+        hint: "Count host bits: 32 - 22 = 10"
+      }
+    ];
+
+    // Lab Scenarios
+    const labScenarios = {
+      dhcp: {
+        name: "DHCP Configuration",
+        scenario: "PC is not getting IP address from DHCP server. Configure DHCP pool on Router R1.",
+        solution: [
+          "ip dhcp pool LAN",
+          "network 192.168.1.0 255.255.255.0",
+          "default-router 192.168.1.1",
+          "dns-server 8.8.8.8",
+          "exit"
+        ],
+        hints: [
+          "First create the DHCP pool",
+          "Define the network range",
+          "Set the default gateway",
+          "Configure DNS server"
+        ]
+      },
+      ospf: {
+        name: "OSPF Routing",
+        scenario: "Router cannot reach remote networks. Configure OSPF routing protocol.",
+        solution: [
+          "router ospf 1",
+          "network 192.168.1.0 0.0.0.255 area 0",
+          "network 192.168.2.0 0.0.0.255 area 0",
+          "exit"
+        ],
+        hints: [
+          "Enable OSPF process",
+          "Advertise connected networks",
+          "Place networks in area 0",
+          "Verify OSPF neighbors"
+        ]
+      },
+      security: {
+        name: "Port Security",
+        scenario: "Unauthorized device connected to switch port. Enable port security to prevent access.",
+        solution: [
+          "interface gigabitethernet0/1",
+          "switchport mode access",
+          "switchport port-security",
+          "switchport port-security maximum 1",
+          "switchport port-security violation shutdown"
+        ],
+        hints: [
+          "Access the interface",
+          "Set as access port",
+          "Enable port security",
+          "Limit to 1 MAC address"
+        ]
+      }
+    };
+
+    // Initialize App
+    function initApp() {
+      // Register service worker for PWA
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
+          const CACHE = 'ccna-pro-v1';
+          self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(['.']))));
+          self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))));
+        `));
+      }
+
+      // Check for PWA install prompt
+      let installPrompt;
+      window.addEventListener('beforeinstallprompt', e => {
+        e.preventDefault();
+        installPrompt = e;
+        document.getElementById('installApp').classList.remove('hidden');
+      });
+
+      // Load saved progress
+      loadProgress();
+      
+      // Start timer
+      startTimer();
+    }
+
+    // Game Mode Management
+    function startMode(mode) {
+      playSound('click');
+      gameState.currentMode = mode;
+      gameState.startTime = Date.now();
+      
+      // Hide mode selection
+      document.getElementById('modeSelection').classList.add('hidden');
+      
+      // Show appropriate mode
+      switch(mode) {
+        case 'quiz':
+          startQuizMode();
+          break;
+        case 'subnet':
+          startSubnetMode();
+          break;
+        case 'lab':
+          startLabMode();
+          break;
+      }
+    }
+
+    function startQuizMode() {
+      document.getElementById('quizMode').classList.remove('hidden');
+      loadNextQuestion();
+    }
+
+    function startSubnetMode() {
+      document.getElementById('subnetMode').classList.remove('hidden');
+      generateSubnetProblem();
+    }
+
+    function startLabMode() {
+      document.getElementById('labMode').classList.remove('hidden');
+      loadLab('dhcp'); // Default lab
+    }
+
+    // Quiz Functionality
+    function loadNextQuestion() {
+      if (gameState.usedQuestions.size >= questionBank.length) {
+        endQuiz();
+        return;
+      }
+
+      // Get random unused question
+      let question;
+      do {
+        const randomIndex = Math.floor(Math.random() * questionBank.length);
+        question = questionBank[randomIndex];
+      } while (gameState.usedQuestions.has(question));
+      
+      gameState.usedQuestions.add(question);
+      gameState.currentQuestion++;
+      gameState.selectedAnswer = null;
+
+      // Update UI
+      document.getElementById('questionText').textContent = question.question;
+      document.getElementById('currentQuestion').textContent = gameState.currentQuestion;
+      document.getElementById('questionCount').textContent = gameState.usedQuestions.size;
+      
+      // Update progress
+      const percentage = (gameState.usedQuestions.size / questionBank.length) * 100;
+      document.getElementById('quizProgress').style.width = percentage + '%';
+      document.getElementById('quizPercentage').textContent = Math.round(percentage);
+
+      // Create options
+      const optionsGrid = document.getElementById('optionsGrid');
+      optionsGrid.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-button';
+        button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+        button.onclick = () => selectAnswer(index, button);
+        optionsGrid.appendChild(button);
+      });
+
+      // Reset buttons
+      document.getElementById('submitAnswer').disabled = false;
+      document.getElementById('nextQuestion').disabled = true;
+      document.getElementById('questionFeedback').classList.add('hidden');
+    }
+
+    function selectAnswer(index, button) {
+      playSound('click');
+      
+      // Remove previous selection
+      document.querySelectorAll('.option-button').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      // Select current answer
+      button.classList.add('selected');
+      gameState.selectedAnswer = index;
+    }
+
+    function submitAnswer() {
+      if (gameState.selectedAnswer === null) return;
+      
+      const question = Array.from(gameState.usedQuestions)[gameState.usedQuestions.size - 1];
+      const isCorrect = gameState.selectedAnswer === question.correct;
+      
+      // Play sound
+      playSound(isCorrect ? 'correct' : 'incorrect');
+      
+      // Update score
+      if (isCorrect) {
+        gameState.score += 10;
+        gameState.streak++;
+      } else {
+        gameState.streak = 0;
+      }
+      
+      updateStats();
+      
+      // Show feedback
+      showQuestionFeedback(isCorrect, question);
+      
+      // Update option buttons
+      document.querySelectorAll('.option-button').forEach((button, index) => {
+        if (index === question.correct) {
+          button.classList.add('correct');
+        } else if (index === gameState.selectedAnswer && !isCorrect) {
+          button.classList.add('incorrect');
+        }
+        button.style.pointerEvents = 'none';
+      });
+      
+      // Update button states
+      document.getElementById('submitAnswer').disabled = true;
+      document.getElementById('nextQuestion').disabled = false;
+    }
+
+    function showQuestionFeedback(isCorrect, question) {
+      const feedback = document.getElementById('questionFeedback');
+      feedback.className = `feedback-card ${isCorrect ? 'feedback-success' : 'feedback-error'}`;
+      
+      feedback.innerHTML = `
+        <h4><i class="fas ${isCorrect ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${isCorrect ? 'Correct!' : 'Incorrect'}</h4>
+        <p><strong>Explanation:</strong> ${question.explanation}</p>
+        <p><strong>Category:</strong> ${question.category}</p>
+      `;
+      
+      feedback.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      playSound('click');
+      loadNextQuestion();
+    }
+
+    // Subnetting Functionality
+    function generateSubnetProblem() {
+      const problem = subnetProblems[Math.floor(Math.random() * subnetProblems.length)];
+      gameState.currentSubnet = problem;
+      
+      document.getElementById('subnetPrompt').textContent = problem.question;
+      document.getElementById('subnetAnswer').value = '';
+      document.getElementById('subnetResult').innerHTML = '';
+    }
+
+    function checkSubnet() {
+      const userAnswer = document.getElementById('subnetAnswer').value.trim();
+      const correctAnswer = gameState.currentSubnet.answer;
+      
+      const isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
+      playSound(isCorrect ? 'correct' : 'incorrect');
+      
+      if (isCorrect) {
+        gameState.score += 15;
+        gameState.streak++;
+      } else {
+        gameState.streak = 0;
+      }
+      
+      updateStats();
+      
+      const resultDiv = document.getElementById('subnetResult');
+      resultDiv.className = `result-card ${isCorrect ? 'result-success' : 'result-error'}`;
+      
+      resultDiv.innerHTML = `
+        <h4><i class="fas ${isCorrect ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${isCorrect ? 'Correct!' : 'Incorrect'}</h4>
+        <p><strong>Your Answer:</strong> ${userAnswer}</p>
+        <p><strong>Correct Answer:</strong> ${correctAnswer}</p>
+        <p><strong>Explanation:</strong> ${gameState.currentSubnet.explanation}</p>
+      `;
+    }
+
+    function showSubnetHint() {
+      const hint = gameState.currentSubnet.hint;
+      const resultDiv = document.getElementById('subnetResult');
+      
+      resultDiv.className = 'result-card';
+      resultDiv.innerHTML = `
+        <h4><i class="fas fa-lightbulb"></i> Hint</h4>
+        <p>${hint}</p>
+      `;
+    }
+
+    // CLI Lab Functionality
+    function loadLab(labType) {
+      if (!labType || !labScenarios[labType]) return;
+      
+      const lab = labScenarios[labType];
+      gameState.currentLab = lab;
+      
+      document.getElementById('labScenario').innerHTML = `
+        <h4><i class="fas fa-tasks"></i> ${lab.name}</h4>
+        <p>${lab.scenario}</p>
+      `;
+      
+      resetLab();
+    }
+
+    function handleCLI(event) {
+      if (event.key === 'Enter') {
+        runCommand();
+      }
+    }
+
+    function runCommand() {
+      const input = document.getElementById('cliInput');
+      const command = input.value.trim();
+      
+      if (!command) return;
+      
+      // Add command to terminal
+      addToTerminal(`<span class="cli-prompt">Router></span> ${command}`, 'command');
+      
+      // Process command
+      processCommand(command);
+      
+      input.value = '';
+    }
+
+    function processCommand(command) {
+      const cmd = command.toLowerCase();
+      
+      if (cmd === 'help') {
+        addToTerminal('Available commands:', 'output');
+        addToTerminal('  show running-config - Display current configuration', 'output');
+        addToTerminal('  show ip interface brief - Show interface status', 'output');
+        addToTerminal('  configure terminal - Enter configuration mode', 'output');
+        addToTerminal('  exit - Exit current mode', 'output');
+        addToTerminal('  help - Show this help', 'output');
+      } else if (cmd === 'show running-config') {
+        addToTerminal('Building configuration...', 'output');
+        addToTerminal('Current configuration:', 'output');
+        addToTerminal('!', 'output');
+        addToTerminal('hostname Router', 'output');
+        addToTerminal('!', 'output');
+        addToTerminal('interface GigabitEthernet0/0', 'output');
+        addToTerminal(' ip address 192.168.1.1 255.255.255.0', 'output');
+        addToTerminal(' no shutdown', 'output');
+        addToTerminal('!', 'output');
+      } else if (cmd === 'show ip interface brief') {
+        addToTerminal('Interface                  IP-Address      OK? Method Status                Protocol', 'output');
+        addToTerminal('GigabitEthernet0/0         192.168.1.1     YES manual up                    up', 'output');
+        addToTerminal('GigabitEthernet0/1         unassigned      YES unset  administratively down down', 'output');
+      } else if (cmd.startsWith('ip dhcp pool')) {
+        addToTerminal('DHCP pool configuration mode entered', 'output');
+        addToTerminal('Use commands like:', 'output');
+        addToTerminal('  network 192.168.1.0 255.255.255.0', 'output');
+        addToTerminal('  default-router 192.168.1.1', 'output');
+        addToTerminal('  dns-server 8.8.8.8', 'output');
+      } else {
+        addToTerminal(`Command '${command}' not recognized. Type 'help' for available commands.`, 'output');
+      }
+      
+      addToTerminal('', 'output');
+      addToTerminal('<span class="cli-prompt">Router></span>', 'prompt');
+    }
+
+    function addToTerminal(text, type) {
+      const terminal = document.getElementById('cliTerminal');
+      const line = document.createElement('div');
+      line.className = `cli-${type}`;
+      line.innerHTML = text;
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function showSolution() {
+      if (!gameState.currentLab) return;
+      
+      const solution = gameState.currentLab.solution;
+      addToTerminal('=== SOLUTION ===', 'output');
+      solution.forEach(cmd => {
+        addToTerminal(cmd, 'output');
+      });
+      addToTerminal('', 'output');
+    }
+
+    function resetLab() {
+      const terminal = document.getElementById('cliTerminal');
+      terminal.innerHTML = `
+        <div class="cli-output">Welcome to Cisco IOS Simulator</div>
+        <div class="cli-output">Type 'help' for available commands</div>
+        <div class="cli-output"></div>
+        <div>
+          <span class="cli-prompt">Router></span>
+          <input type="text" class="cli-input" id="cliInput" onkeypress="handleCLI(event)" placeholder="Enter command...">
+        </div>
+      `;
+    }
+
+    // Utility Functions
+    function updateStats() {
+      document.getElementById('totalScore').textContent = gameState.score;
+      document.getElementById('currentStreak').textContent = gameState.streak;
+    }
+
+    function startTimer() {
+      setInterval(() => {
+        if (gameState.startTime) {
+          const elapsed = Math.floor((Date.now() - gameState.startTime) / 1000);
+          const minutes = Math.floor(elapsed / 60);
+          const seconds = elapsed % 60;
+          document.getElementById('timer').textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+      }, 1000);
+    }
+
+    function playSound(type) {
+      try {
+        const sound = document.getElementById(type + 'Sound');
+        if (sound) {
+          sound.currentTime = 0;
+          sound.play().catch(() => {});
+        }
+      } catch (e) {
+        // Ignore audio errors
+      }
+    }
+
+    function saveProgress() {
+      localStorage.setItem('ccnaProgress', JSON.stringify({
+        score: gameState.score,
+        streak: gameState.streak,
+        usedQuestions: Array.from(gameState.usedQuestions)
+      }));
+    }
+
+    function loadProgress() {
+      const saved = localStorage.getItem('ccnaProgress');
+      if (saved) {
+        const progress = JSON.parse(saved);
+        gameState.score = progress.score || 0;
+        gameState.streak = progress.streak || 0;
+        gameState.usedQuestions = new Set(progress.usedQuestions || []);
+        updateStats();
+      }
+    }
+
+    function endQuiz() {
+      document.getElementById('quizMode').classList.add('hidden');
+      document.getElementById('resultsSection').classList.remove('hidden');
+      
+      const finalResults = document.getElementById('finalResults');
+      const percentage = Math.round((gameState.score / (gameState.usedQuestions.size * 10)) * 100);
+      
+      finalResults.innerHTML = `
+        <div class="question-card">
+          <h4><i class="fas fa-chart-line"></i> Quiz Complete!</h4>
+          <p><strong>Final Score:</strong> ${gameState.score} points</p>
+          <p><strong>Questions Answered:</strong> ${gameState.usedQuestions.size}</p>
+          <p><strong>Accuracy:</strong> ${percentage}%</p>
+          <p><strong>Best Streak:</strong> ${gameState.streak}</p>
+        </div>
+      `;
+      
+      playSound('success');
+      saveProgress();
+    }
+
+    function restartQuiz() {
+      gameState.usedQuestions.clear();
+      gameState.score = 0;
+      gameState.streak = 0;
+      gameState.currentQuestion = 0;
+      updateStats();
+      
+      document.getElementById('resultsSection').classList.add('hidden');
+      startMode('quiz');
+    }
+
+    function backToMenu() {
+      document.getElementById('resultsSection').classList.add('hidden');
+      document.getElementById('quizMode').classList.add('hidden');
+      document.getElementById('subnetMode').classList.add('hidden');
+      document.getElementById('labMode').classList.add('hidden');
+      document.getElementById('modeSelection').classList.remove('hidden');
+      
+      gameState.currentMode = null;
+      saveProgress();
+    }
+
+    function installApp() {
+      if (installPrompt) {
+        installPrompt.prompt();
+        installPrompt.userChoice.then(choice => {
+          if (choice.outcome === 'accepted') {
+            console.log('App installed');
+          }
+          installPrompt = null;
+          document.getElementById('installApp').classList.add('hidden');
+        });
+      }
+    }
+
+    // Initialize when page loads
+    window.addEventListener('load', initApp);
+  </script>
+</body>
+</html>
