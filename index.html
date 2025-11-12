@@ -1,162 +1,158 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CCNA Trainer — PWA</title>
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#064e4f" />
-  <link rel="stylesheet" href="/style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CCNA Trainer — PWA</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#064e4f" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <div id="app" class="app">
-    <header class="topbar">
-      <div class="brand">
-        <h1>CCNA Trainer</h1>
-        <small>Offline PWA • Dark Teal</small>
-      </div>
-      <div class="actions">
-        <button id="installBtn" class="btn hidden">Install</button>
-        <button id="resetBtn" class="btn ghost">Reset Progress</button>
-      </div>
-    </header>
+  <div id="app" class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>CCNA Trainer</h1>
+        <small>Offline PWA • Dark Teal</small>
+      </div>
+      <div class="actions">
+        <button id="installBtn" class="btn hidden">Install</button>
+        <button id="resetBtn" class="btn ghost">Reset Progress</button>
+      </div>
+    </header>
 
-    <main class="main">
-      <!-- MENU -->
-      <section id="menu" class="panel">
-        <h2>Main Menu</h2>
-        <div class="grid">
-          <button class="mode-btn" data-mode="quiz">Quizzes</button>
-          <button class="mode-btn" data-mode="subnet">Subnetting</button>
-          <button class="mode-btn" data-mode="labs">Labs (CLI)</button>
-          <button class="mode-btn" data-mode="drag">Drag & Drop</button>
-          <button class="mode-btn" data-mode="sim">Simulations</button>
-          <button class="mode-btn" data-mode="trbl">Troubleshooting</button>
-          <button class="btn" onclick="toggleMusic()">🎵 Music</button>
+    <main class="main">
+            <section id="menu" class="panel">
+        <h2>Main Menu</h2>
+        <div class="grid">
+          <button class="mode-btn" data-mode="quiz">Quizzes</button>
+          <button class="mode-btn" data-mode="subnet">Subnetting</button>
+          <button class="mode-btn" data-mode="labs">Labs (CLI)</button>
+          <button class="mode-btn" data-mode="drag">Drag & Drop</button>
+          <button class="mode-btn" data-mode="sim">Simulations</button>
+          <button class="mode-btn" data-mode="trbl">Troubleshooting</button>
+          <button class="btn" onclick="toggleMusic()">🎵 Music</button>
 
-        </div>
-        <div class="menu-stats">
-          <div>Questions: <span id="totalQuestions">0</span></div>
-          <div>Sound: <span id="soundState">On</span></div>
-        </div>
-      </section>
+        </div>
+        <div class="menu-stats-grid">
+    <div class="stat-card">
+        <small>Total Qs</small>
+        <div id="totalQuestions" class="stat-value">0</div>
+    </div>
+    <div class="stat-card">
+        <small>Sound</small>
+        <div id="soundState" class="stat-value active">On</div>
+    </div>
+</div>
+      </section>
 
-      <!-- QUIZ -->
-      <section id="quiz" class="panel hidden">
-        <div class="panel-header">
-          <button class="back" onclick="goMenu()">← Menu</button>
-          <div>Quiz Mode — <span id="quizCount">0</span> Q</div>
-          <div class="timer">Time: <span id="quizTimer">00:00</span></div>
-        </div>
+            <section id="quiz" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>Quiz Mode — <span id="quizCount">0</span> Q</div>
+          <div class="timer">Time: <span id="quizTimer">00:00</span></div>
+        </div>
 
-        <div class="card">
-          <div id="quizQ" class="question"></div>
-          <div id="quizOpts" class="opts"></div>
-          <div id="quizExplain" class="explain hidden"></div>
-        </div>
+        <div class="card">
+          <div id="quizQ" class="question"></div>
+          <div id="quizOpts" class="opts"></div>
+          <div id="quizExplain" class="explain hidden"></div>
+        </div>
 
-        <div class="panel-controls">
-          <button class="btn" onclick="skipQ()">Skip</button>
-          <button class="btn ghost" onclick="endQuiz()">End</button>
-        </div>
-      </section>
+        <div class="panel-controls">
+          <button class="btn" onclick="skipQ()">Skip</button>
+          <button class="btn ghost" onclick="endQuiz()">End</button>
+        </div>
+      </section>
 
-      <!-- SUBNET -->
-      <section id="subnet" class="panel hidden">
-        <div class="panel-header">
-          <button class="back" onclick="goMenu()">← Menu</button>
-          <div>Subnetting Challenges</div>
-        </div>
+            <section id="subnet" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>Subnetting Challenges</div>
+        </div>
 
-        <div id="subnetCard" class="card">
-          <div id="subnetQ" class="question"></div>
-          <input id="subnetAns" placeholder="Enter answer (e.g. 255.255.255.192)" class="input"/>
-          <div class="small"><button class="btn" onclick="checkSubnet()">Check</button> <button class="btn ghost" onclick="nextSubnet()">Next</button></div>
-          <div id="subnetFeedback" class="explain hidden"></div>
-        </div>
-      </section>
+        <div id="subnetCard" class="card">
+          <div id="subnetQ" class="question"></div>
+          <input id="subnetAns" placeholder="Enter answer (e.g. 255.255.255.192)" class="input"/>
+          <div class="small"><button class="btn" onclick="checkSubnet()">Check</button> <button class="btn ghost" onclick="nextSubnet()">Next</button></div>
+          <div id="subnetFeedback" class="explain hidden"></div>
+        </div>
+      </section>
 
-      <!-- LABS -->
-      <section id="labs" class="panel hidden">
-        <div class="panel-header">
-          <button class="back" onclick="goMenu()">← Menu</button>
-          <div>CLI Labs</div>
-        </div>
+            <section id="labs" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>CLI Labs</div>
+        </div>
 
-        <div class="card">
-          <div id="labScenario" class="question"></div>
-          <div id="terminal" class="terminal" aria-live="polite"></div>
-          <textarea id="cliInput" class="textarea" placeholder="Enter CLI commands — multi-line supported"></textarea>
-          <div class="small">
-            <button class="btn" onclick="runCLI()">Run</button>
-            <button class="btn ghost" onclick="clearTerminal()">Clear</button>
-            <button class="btn" onclick="verifyLab()">Verify</button>
-          </div>
-          <div id="labFeedback" class="explain hidden"></div>
-        </div>
-      </section>
+        <div class="card">
+          <div id="labScenario" class="question"></div>
+          <div id="terminal" class="terminal" aria-live="polite"></div>
+          <textarea id="cliInput" class="textarea" placeholder="Enter CLI commands — multi-line supported"></textarea>
+          <div class="small">
+            <button class="btn" onclick="runCLI()">Run</button>
+            <button class="btn ghost" onclick="clearTerminal()">Clear</button>
+            <button class="btn" onclick="verifyLab()">Verify</button>
+          </div>
+          <div id="labFeedback" class="explain hidden"></div>
+        </div>
+      </section>
 
-      <!-- DRAG -->
-      <section id="drag" class="panel hidden">
-        <div class="panel-header">
-          <button class="back" onclick="goMenu()">← Menu</button>
-          <div>Drag & Drop</div>
-        </div>
+            <section id="drag" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>Drag & Drop</div>
+        </div>
 
-        <div id="dragCard" class="card">
-          <div id="dragQ" class="question"></div>
-          <div id="dragArea" class="drag-area"></div>
-          <div id="dragFeedback" class="explain hidden"></div>
-          <div class="small"><button class="btn" onclick="nextDrag()">Next</button></div>
-        </div>
-      </section>
+        <div id="dragCard" class="card">
+          <div id="dragQ" class="question"></div>
+          <div id="dragArea" class="drag-area"></div>
+          <div id="dragFeedback" class="explain hidden"></div>
+          <div class="small"><button class="btn" onclick="nextDrag()">Next</button></div>
+        </div>
+      </section>
 
-      <!-- SIM -->
-      <section id="sim" class="panel hidden">
-        <div class="panel-header">
-          <button class="back" onclick="goMenu()">← Menu</button>
-          <div>Simulations</div>
-        </div>
+            <section id="sim" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>Simulations</div>
+        </div>
 
-        <div id="simCard" class="card">
-          <div id="simQ" class="question"></div>
-          <div id="simTasks"></div>
-          <div class="small"><button class="btn" onclick="startSim()">Start</button> <button class="btn ghost" onclick="nextSim()">Next</button></div>
-          <div id="simFeedback" class="explain hidden"></div>
-        </div>
-      </section>
+        <div id="simCard" class="card">
+          <div id="simQ" class="question"></div>
+          <div id="simTasks"></div>
+          <div class="small"><button class="btn" onclick="startSim()">Start</button> <button class="btn ghost" onclick="nextSim()">Next</button></div>
+          <div id="simFeedback" class="explain hidden"></div>
+        </div>
+      </section>
 
-      <!-- TROUBLE -->
-      <section id="trbl" class="panel hidden">
-        <div class="panel-header">
-          <button class="back" onclick="goMenu()">← Menu</button>
-          <div>Troubleshooting Scenarios</div>
-        </div>
+            <section id="trbl" class="panel hidden">
+        <div class="panel-header">
+          <button class="back" onclick="goMenu()">← Menu</button>
+          <div>Troubleshooting Scenarios</div>
+        </div>
 
-        <div id="trblCard" class="card">
-          <div id="trblQ" class="question"></div>
-          <div id="trblDetails"></div>
-          <div class="small"><button class="btn" onclick="nextTrbl()">Next</button></div>
-        </div>
-      </section>
+        <div id="trblCard" class="card">
+          <div id="trblQ" class="question"></div>
+          <div id="trblDetails"></div>
+          <div class="small"><button class="btn" onclick="nextTrbl()">Next</button></div>
+        </div>
+      </section>
 
-    </main>
+    </main>
 
-    <footer class="footer">
-      <small>Built for offline use • Drop updated /data.json into repo root to change content</small>
-    </footer>
-  </div>
+    <footer class="footer">
+      <small>Built for offline use • Drop updated /data.json into repo root to change content</small>
+    </footer>
+  </div>
 
-  <!-- Embedded audio (short beeps) -->
-  <audio id="sClick"><source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
-  <audio id="sCorrect"><source src="data:audio/wav;base64,UklGRlQAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
-  <audio id="sWrong"><source src="data:audio/wav;base64,UklGRrQAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
-<!-- Background music (auto-loop) -->
+    <audio id="sClick"><source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
+  <audio id="sCorrect"><source src="data:audio/wav;base64,UklGRlQAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
+  <audio id="sWrong"><source src="data:audio/wav;base64,UklGRrQAAABXQVZFZm10IBAAAAABAAEAESsAAAB3AQACABAAZGF0YQAAAAA=" type="audio/wav"></audio>
 <audio id="bgMusic" loop autoplay volume="0.3">
-  <source src="data:audio/mp3;base64,PASTE_YOUR_MUSIC_BASE64_HERE" type="audio/mp3">
+  <source src="data:audio/mp3;base64,PASTE_YOUR_MUSIC_BASE64_HERE" type="audio/mp3">
 </audio>
 
-  <script src="/script.js" defer></script>
+  <script src="/script.js" defer></script>
 </body>
 </html>
-
