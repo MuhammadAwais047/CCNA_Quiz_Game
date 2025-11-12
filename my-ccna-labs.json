@@ -1,9 +1,187 @@
 {
   "questions": [
-    {"type":"mc","q":"What does ACL stand for?","o":["Access Control List","Address Control Layer"],"a":0,"e":"Security!"}
+    {
+      "type": "mc",
+      "q": "What does ACL stand for?",
+      "o": ["Access Control List", "Address Control Layer", "Advanced Configuration Logic", "Automated Connection List"],
+      "a": 0,
+      "e": "ACL stands for Access Control List, which is used to filter network traffic based on specified criteria."
+    },
+    {
+      "type": "mc",
+      "q": "Which command enables IPv6 routing on a Cisco router?",
+      "o": ["ipv6 enable", "ipv6 unicast-routing", "ipv6 address", "ipv6 route"],
+      "a": 1,
+      "e": "The ipv6 unicast-routing command enables IPv6 routing capabilities on a Cisco router."
+    },
+    {
+      "type": "mc",
+      "q": "What is the default violation mode for port security on a Cisco switch?",
+      "o": ["disabled", "shutdown", "protect", "restrict"],
+      "a": 1,
+      "e": "The default violation mode for port security is shutdown, which puts the port in error-disabled state when a violation occurs."
+    },
+    {
+      "type": "mc",
+      "q": "Which server is required for WPA2 Enterprise authentication?",
+      "o": ["AAA", "DHCP", "RADIUS", "SNMP"],
+      "a": 2,
+      "e": "RADIUS server is required for WPA2 Enterprise authentication to handle user authentication."
+    },
+    {
+      "type": "mc",
+      "q": "What is the administrative distance of OSPF?",
+      "o": ["90", "110", "120", "170"],
+      "a": 1,
+      "e": "OSPF has an administrative distance of 110, making it more preferred than RIP (120) but less than EIGRP (90)."
+    },
+    {
+      "type": "mc",
+      "q": "Which protocol defines port-based authentication for LAN access?",
+      "o": ["SSH", "802.1x", "RADIUS", "TACACS+"],
+      "a": 1,
+      "e": "802.1x is the IEEE standard that defines port-based network access control."
+    },
+    {
+      "type": "mc",
+      "q": "What is the purpose of NAT?",
+      "o": ["Encrypt data", "Translate private to public IPs", "Provide wireless access", "Block malware"],
+      "a": 1,
+      "e": "NAT (Network Address Translation) translates private IP addresses to public IP addresses for internet communication."
+    },
+    {
+      "type": "mc",
+      "q": "Which command allows only SSH access on a router?",
+      "o": ["transport input ssh telnet", "transport input ssh", "transport input none", "no transport input telnet"],
+      "a": 1,
+      "e": "The command 'transport input ssh' allows only SSH access and disables other methods like Telnet."
+    },
+    {
+      "type": "mc",
+      "q": "What is the default queuing method on Cisco routers?",
+      "o": ["Weighted Fair Queuing", "First-In-First-Out", "Priority Queuing", "Custom Queuing"],
+      "a": 1,
+      "e": "FIFO (First-In-First-Out) is the default queuing method where packets are sent in the order they arrive."
+    },
+    {
+      "type": "mc",
+      "q": "Which 802.11 standards operate in both 2.4 GHz and 5 GHz bands?",
+      "o": ["802.11b/g", "802.11n/ac", "802.11a/b", "802.11g only"],
+      "a": 1,
+      "e": "802.11n and 802.11ac operate in both 2.4 GHz and 5 GHz frequency bands."
+    },
+    {
+      "type": "mc",
+      "q": "What is the purpose of the 'ip helper-address' command?",
+      "o": ["Configure DHCP server", "Forward DHCP requests to server", "Enable DHCP snooping", "Block DHCP traffic"],
+      "a": 1,
+      "e": "The ip helper-address command forwards DHCP requests from clients to a remote DHCP server."
+    },
+    {
+      "type": "mc",
+      "q": "Which term describes a backup route with higher administrative distance?",
+      "o": ["Primary route", "Floating static route", "Default route", "Dynamic route"],
+      "a": 1,
+      "e": "A floating static route is configured with higher administrative distance to serve as a backup route."
+    },
+    {
+      "type": "mc",
+      "q": "What is the IPv6 prefix for unique local addresses?",
+      "o": ["FE80::/10", "FD00::/8", "2001::/16", "FF00::/8"],
+      "a": 1,
+      "e": "FD00::/8 is the prefix for IPv6 unique local addresses (ULAs) used for local communications."
+    },
+    {
+      "type": "mc",
+      "q": "Which command displays DHCP bindings on a Cisco router?",
+      "o": ["show dhcp bindings", "show ip dhcp binding", "show dhcp leases", "show ip dhcp server"],
+      "a": 1,
+      "e": "The 'show ip dhcp binding' command displays DHCP lease information including IP addresses and MAC addresses."
+    },
+    {
+      "type": "mc",
+      "q": "What is the purpose of STP in a switched network?",
+      "o": ["Increase speed", "Prevent loops", "Provide security", "Enable routing"],
+      "a": 1,
+      "e": "STP (Spanning Tree Protocol) prevents loops in switched networks by creating a loop-free topology."
+    }
   ],
   "subnetting": [
-    {"q":"192.168.10.0/24 → 60 hosts","a":"192.168.10.0/26","e":"60+2=62 → 2^6=64 → /26"}
+    {
+      "q": "192.168.10.0/24 → 60 hosts",
+      "a": "192.168.10.0/26",
+      "e": "60+2=62 → 2^6=64 → /26"
+    },
+    {
+      "q": "What subnet mask allows 30 usable hosts per subnet?",
+      "a": "255.255.255.224",
+      "e": "/27 mask provides 32 addresses total, with 30 usable for hosts"
+    },
+    {
+      "q": "Given 192.168.1.0/26, what is the broadcast address?",
+      "a": "192.168.1.63",
+      "e": "/26 gives subnets of 64 addresses: 0-63, 64-127, etc. First broadcast is 192.168.1.63"
+    },
+    {
+      "q": "How many subnets can be created from 10.0.0.0/18?",
+      "a": "4,096",
+      "e": "Borrowing 10 bits from host portion: 2^10 = 1,024 subnets (but Class A starts with /8, so /18 means 10 bits borrowed)"
+    },
+    {
+      "q": "What mask creates exactly 2 usable hosts per subnet?",
+      "a": "255.255.255.252",
+      "e": "/30 mask provides 4 addresses total, with 2 usable for hosts"
+    },
+    {
+      "q": "Given 172.16.25.100/22, what is the network address?",
+      "a": "172.16.24.0",
+      "e": "/22 means 4 host bits borrowed. 172.16.24.0 to 172.16.27.255 range"
+    },
+    {
+      "q": "What is the broadcast address for 192.168.2.60/28?",
+      "a": "192.168.2.63",
+      "e": "/28 creates subnets of 16 addresses. 192.168.2.48-63, so broadcast is .63"
+    },
+    {
+      "q": "How many usable hosts with mask 255.255.252.0?",
+      "a": "1,022",
+      "e": "/22 mask gives 2^10 - 2 = 1,022 usable hosts"
+    },
+    {
+      "q": "What subnet mask for 500 hosts per subnet?",
+      "a": "255.255.254.0",
+      "e": "Need 512 total addresses (510 usable), so /23 mask"
+    },
+    {
+      "q": "Given 210.30.12.0/26, what are the broadcast addresses?",
+      "a": "210.30.12.63, 127, 191, 255",
+      "e": "/26 creates subnets of 64 addresses each, broadcast is last address in each subnet"
+    },
+    {
+      "q": "How many bits borrowed for mask 255.255.240.0?",
+      "a": "4 bits",
+      "e": "240 in binary is 11110000, so 4 bits are borrowed from host portion"
+    },
+    {
+      "q": "What is the first usable IP in subnet 172.16.32.0/19?",
+      "a": "172.16.32.1",
+      "e": "First usable IP is always network address + 1"
+    },
+    {
+      "q": "How many usable IPs with mask 255.255.255.240?",
+      "a": "14",
+      "e": "/28 mask provides 16 total addresses, minus 2 for network and broadcast"
+    },
+    {
+      "q": "What subnet mask for exactly 4 subnets from 192.168.20.0/24?",
+      "a": "255.255.255.192",
+      "e": "Need 2 bits for 4 subnets: 2^2 = 4, so /26 mask"
+    },
+    {
+      "q": "Given 10.10.0.0/16, what mask for 1000 hosts per subnet?",
+      "a": "255.255.252.0",
+      "e": "Need 1024 total addresses (1022 usable), so /22 mask"
+    }
   ],
   "labs": [
     {
@@ -12,6 +190,219 @@
       "cli": "R1# ",
       "solution": "ip dhcp pool LAN",
       "feedback": "DHCP working!"
+    },
+    {
+      "name": "Configure OSPF",
+      "scenario": "Router cannot reach remote networks. Configure OSPF routing.",
+      "cli": "R1(config)# ",
+      "solution": "router ospf 1\nnetwork 192.168.1.0 0.0.0.255 area 0",
+      "feedback": "OSPF neighbors formed, routing table updated!"
+    },
+    {
+      "name": "Enable Port Security",
+      "scenario": "Unauthorized device connected to switch port. Enable port security.",
+      "cli": "Switch(config-if)# ",
+      "solution": "switchport port-security\nswitchport port-security maximum 1\nswitchport port-security violation shutdown",
+      "feedback": "Port security enabled, unauthorized access blocked!"
+    },
+    {
+      "name": "Configure Static Route",
+      "scenario": "Router cannot reach 10.0.0.0/24 network. Add static route.",
+      "cli": "R1(config)# ",
+      "solution": "ip route 10.0.0.0 255.255.255.0 192.168.1.2",
+      "feedback": "Static route added, network reachable!"
+    },
+    {
+      "name": "Enable IPv6 Routing",
+      "scenario": "Router not forwarding IPv6 traffic. Enable IPv6 capabilities.",
+      "cli": "R1(config)# ",
+      "solution": "ipv6 unicast-routing",
+      "feedback": "IPv6 routing enabled, IPv6 traffic flowing!"
+    },
+    {
+      "name": "Configure Access List",
+      "scenario": "Block HTTP traffic from 192.168.1.0/24 to web server.",
+      "cli": "R1(config)# ",
+      "solution": "access-list 101 deny tcp 192.168.1.0 0.0.0.255 any eq 80\naccess-list 101 permit ip any any",
+      "feedback": "HTTP traffic blocked, other traffic allowed!"
+    },
+    {
+      "name": "Configure VLAN Trunk",
+      "scenario": "Switch ports need to carry multiple VLANs. Configure trunk port.",
+      "cli": "Switch(config-if)# ",
+      "solution": "switchport mode trunk\nswitchport trunk allowed vlan all",
+      "feedback": "Trunk configured, multiple VLANs can traverse the link!"
+    },
+    {
+      "name": "Set Up NAT Overload",
+      "scenario": "Configure PAT to allow multiple internal hosts to share one public IP.",
+      "cli": "R1(config)# ",
+      "solution": "access-list 1 permit 192.168.1.0 0.0.0.255\nip nat inside source list 1 interface gigabitethernet0/0 overload",
+      "feedback": "NAT overload configured, multiple hosts can access internet!"
+    },
+    {
+      "name": "Configure SSH Access",
+      "scenario": "Insecure Telnet access enabled. Configure secure SSH access only.",
+      "cli": "R1(config)# ",
+      "solution": "ip domain-name example.com\ncrypto key generate rsa\nusername admin privilege 15 password cisco\nline vty 0 15\ntransport input ssh\nlogin local",
+      "feedback": "SSH configured, secure remote access enabled!"
+    },
+    {
+      "name": "Enable EIGRP Routing",
+      "scenario": "Configure EIGRP for autonomous system 100 on the router.",
+      "cli": "R1(config)# ",
+      "solution": "router eigrp 100\nnetwork 192.168.1.0 0.0.0.255\nno auto-summary",
+      "feedback": "EIGRP configured, routes being exchanged!"
+    }
+  ],
+  "drag_drop": [
+    {
+      "question": "Match the OSI layer to its function",
+      "items": {
+        "Physical": "Converts bits to signals",
+        "Data Link": "Frames and MAC addresses", 
+        "Network": "Routing and logical addressing",
+        "Transport": "End-to-end connections",
+        "Session": "Manages sessions",
+        "Presentation": "Data encryption/compression",
+        "Application": "User interfaces"
+      }
+    },
+    {
+      "question": "Match the routing protocol to its characteristics",
+      "items": {
+        "RIP": "Distance vector, hop count",
+        "OSPF": "Link state, cost metric",
+        "EIGRP": "Hybrid, bandwidth/delay",
+        "BGP": "Path vector, policy-based"
+      }
+    },
+    {
+      "question": "Match the IPv6 address type to its prefix",
+      "items": {
+        "Global Unicast": "2000::/3",
+        "Link-Local": "FE80::/10",
+        "Unique Local": "FD00::/8",
+        "Multicast": "FF00::/8"
+      }
+    },
+    {
+      "question": "Match the switch function to its description",
+      "items": {
+        "Learning": "Adds MAC addresses to table",
+        "Forwarding": "Sends frame to specific port",
+        "Flooding": "Sends to all ports except source",
+        "Aging": "Removes old MAC entries"
+      }
+    },
+    {
+      "question": "Match the security feature to its purpose",
+      "items": {
+        "Access Control List": "Filter network traffic",
+        "Port Security": "Restrict MAC addresses on port",
+        "DHCP Snooping": "Prevent rogue DHCP servers",
+        "Dynamic ARP Inspection": "Validate ARP packets"
+      }
+    }
+  ],
+  "simulation": [
+    {
+      "scenario": "Configure a router with basic settings including hostname, IP addresses, and default gateway",
+      "tasks": [
+        "Set hostname to R1",
+        "Configure IP address 192.168.1.1/24 on GigabitEthernet0/0",
+        "Set default gateway to 192.168.1.254",
+        "Save configuration"
+      ],
+      "solution": [
+        "hostname R1",
+        "interface gigabitethernet0/0",
+        "ip address 192.168.1.1 255.255.255.0",
+        "no shutdown",
+        "exit",
+        "ip route 0.0.0.0 0.0.0.0 192.168.1.254",
+        "copy running-config startup-config"
+      ]
+    },
+    {
+      "scenario": "Configure VLANs and inter-VLAN routing on a Layer 3 switch",
+      "tasks": [
+        "Create VLANs 10, 20, and 30",
+        "Configure SVI interfaces for each VLAN",
+        "Assign ports to VLANs",
+        "Enable routing between VLANs"
+      ],
+      "solution": [
+        "vlan 10",
+        "name Sales",
+        "vlan 20",
+        "name Marketing", 
+        "vlan 30",
+        "name Engineering",
+        "interface vlan 10",
+        "ip address 192.168.10.1 255.255.255.0",
+        "interface vlan 20",
+        "ip address 192.168.20.1 255.255.255.0",
+        "interface vlan 30",
+        "ip address 192.168.30.1 255.255.255.0",
+        "interface range gigabitethernet0/1-5",
+        "switchport mode access",
+        "switchport access vlan 10",
+        "interface range gigabitethernet0/6-10",
+        "switchport mode access",
+        "switchport access vlan 20",
+        "ip routing"
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {
+      "scenario": "PC cannot ping its default gateway",
+      "symptoms": ["PC shows 'Destination host unreachable'", "ARP table shows incomplete entry"],
+      "causes": [
+        "Incorrect IP configuration on PC",
+        "Wrong VLAN assignment",
+        "Port shutdown on switch",
+        "IP address conflict"
+      ],
+      "solutions": [
+        "Verify PC IP configuration",
+        "Check switch port VLAN assignment",
+        "Ensure port is enabled with 'no shutdown'",
+        "Check for duplicate IP addresses"
+      ]
+    },
+    {
+      "scenario": "OSPF neighbors not forming adjacency",
+      "symptoms": ["OSPF state stuck at INIT", "No routes in routing table"],
+      "causes": [
+        "Mismatched hello/dead timers",
+        "Different area IDs",
+        "Authentication mismatch",
+        "Network type mismatch"
+      ],
+      "solutions": [
+        "Verify timers match on both routers",
+        "Check area ID configuration",
+        "Confirm authentication settings",
+        "Verify network type consistency"
+      ]
+    },
+    {
+      "scenario": "DHCP clients not receiving IP addresses",
+      "symptoms": ["Clients show APIPA addresses", "DHCP discover packets sent"],
+      "causes": [
+        "DHCP server not configured",
+        "DHCP pool exhausted",
+        "IP helper-address missing",
+        "DHCP snooping blocking traffic"
+      ],
+      "solutions": [
+        "Configure DHCP server and pool",
+        "Check pool utilization and expand if needed",
+        "Add ip helper-address on router",
+        "Verify DHCP snooping configuration"
+      ]
     }
   ]
 }
