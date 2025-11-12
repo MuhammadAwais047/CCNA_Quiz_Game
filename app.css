@@ -1,0 +1,36 @@
+/* app.css */
+:root {
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #1a1f2e;
+    --bg-tertiary: #2a3441;
+    --accent-primary: #00d4ff;
+    --accent-secondary: #ff6b6b;
+    --accent-success: #4ecdc4;
+    --accent-warning: #ffe66d;
+    --text-primary: #ffffff;
+    --text-secondary: #b8c5d1;
+    --text-muted: #8892a0;
+    --border-color: #3a4553;
+    --shadow-primary: 0 8px 32px rgba(0, 212, 255, 0.1);
+    --shadow-secondary: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    --gradient-secondary: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+    --gradient-success: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+}
+/* All other CSS rules from your style block */
+/* ... (complete all the CSS rules from your files) */
