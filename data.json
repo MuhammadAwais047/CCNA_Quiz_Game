@@ -1,13 +1,45 @@
 {
   "questions": [
     {
+      "id": 1,
       "question": "What does ACL stand for in networking?",
       "options": ["Access Control List", "Address Control Layer", "Advanced Configuration Logic", "Automated Connection List"],
       "correct": 0,
       "explanation": "ACL stands for Access Control List, used to filter network traffic based on specified criteria.",
       "category": "Security Fundamentals"
+    },
+    {
+      "id": 2,
+      "question": "Which command enables IPv6 routing on a Cisco router?",
+      "options": ["ipv6 enable", "ipv6 unicast-routing", "ipv6 address", "ipv6 route"],
+      "correct": 1,
+      "explanation": "The 'ipv6 unicast-routing' command enables IPv6 routing capabilities on a Cisco router.",
+      "category": "IP Services"
+    },
+    {
+      "id": 3,
+      "question": "What is the administrative distance of OSPF routing protocol?",
+      "options": ["90", "100", "110", "120"],
+      "correct": 2,
+      "explanation": "OSPF has an administrative distance of 110, determining its trustworthiness compared to other protocols.",
+      "category": "IP Connectivity"
+    },
+    {
+      "id": 4,
+      "question": "Which IEEE protocol defines port-based authentication for LAN access?",
+      "options": ["SSH", "802.1x", "RADIUS", "TACACS+"],
+      "correct": 1,
+      "explanation": "802.1x is the IEEE standard that defines port-based network access control.",
+      "category": "Security Fundamentals"
+    },
+    {
+      "id": 5,
+      "question": "What is the IPv6 prefix for unique local addresses (ULA)?",
+      "options": ["FE80::/10", "FD00::/8", "2001::/16", "FF00::/8"],
+      "correct": 1,
+      "explanation": "FD00::/8 is the prefix for IPv6 unique local addresses (ULAs) used for local communications.",
+      "category": "Network Fundamentals"
     }
-    // Include all your questions here
   ],
   "subnetting": [
     {
@@ -15,21 +47,20 @@
       "answer": "192.168.10.0/26",
       "explanation": "Need 62 usable addresses (60 hosts + 2 reserved). 2^6 = 64 addresses per subnet, so /26 mask.",
       "hint": "Calculate 2^n - 2 >= 60, find smallest n that satisfies this"
+    },
+    {
+      "question": "What subnet mask allows exactly 30 usable hosts per subnet?",
+      "answer": "255.255.255.224",
+      "explanation": "/27 mask provides 32 total addresses (2^5), with 30 usable for hosts (32 - 2 = 30).",
+      "hint": "30 usable hosts = 32 total addresses, so 5 host bits"
     }
-    // Include all subnetting problems
   ],
-  "labs": {
-    "dhcp": {
-      "name": "DHCP Configuration",
-      "scenario": "PC is not getting IP address from DHCP server. Configure DHCP pool on Router R1 to provide IP addresses for the 192.168.1.0/24 network.",
-      "solution": [
-        "ip dhcp pool LAN",
-        "network 192.168.1.0 255.255.255.0",
-        "default-router 192.168.1.1",
-        "dns-server 8.8.8.8",
-        "exit"
-      ]
-    }
-    // Include other labs
-  }
+  "cards": [
+    { "term": "OSI Layer 1", "definition": "Physical Layer - Converts bits to signals" },
+    { "term": "OSI Layer 2", "definition": "Data Link - Frames and MAC addresses" },
+    { "term": "OSI Layer 3", "definition": "Network - Routing and logical addressing" },
+    { "term": "OSI Layer 4", "definition": "Transport - End-to-end connections" },
+    { "term": "TCP", "definition": "Transmission Control Protocol - Reliable delivery" },
+    { "term": "UDP", "definition": "User Datagram Protocol - Fast, unreliable delivery" }
+  ]
 }
