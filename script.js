@@ -3,6 +3,17 @@
  - Supports: quiz, subnet, labs (CLI), drag-drop, simulations, troubleshooting
  - Uses embedded base64 audio for click/correct/wrong (ON)
 */
+// Background music control
+const bgMusic = document.getElementById('bgMusic');
+function toggleMusic() {
+  if (!bgMusic) return;
+  if (bgMusic.paused) {
+    bgMusic.volume = 0.3; // adjust volume 0.0 - 1.0
+    bgMusic.play().catch(() => {});
+  } else {
+    bgMusic.pause();
+  }
+}
 
 const DATA_URL = '/data.json';
 
