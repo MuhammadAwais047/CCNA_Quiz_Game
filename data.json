@@ -1,0 +1,35 @@
+{
+  "questions": [
+    {
+      "question": "What does ACL stand for in networking?",
+      "options": ["Access Control List", "Address Control Layer", "Advanced Configuration Logic", "Automated Connection List"],
+      "correct": 0,
+      "explanation": "ACL stands for Access Control List, used to filter network traffic based on specified criteria.",
+      "category": "Security Fundamentals"
+    }
+    // Include all your questions here
+  ],
+  "subnetting": [
+    {
+      "question": "Given: 192.168.10.0/24, need 60 hosts per subnet",
+      "answer": "192.168.10.0/26",
+      "explanation": "Need 62 usable addresses (60 hosts + 2 reserved). 2^6 = 64 addresses per subnet, so /26 mask.",
+      "hint": "Calculate 2^n - 2 >= 60, find smallest n that satisfies this"
+    }
+    // Include all subnetting problems
+  ],
+  "labs": {
+    "dhcp": {
+      "name": "DHCP Configuration",
+      "scenario": "PC is not getting IP address from DHCP server. Configure DHCP pool on Router R1 to provide IP addresses for the 192.168.1.0/24 network.",
+      "solution": [
+        "ip dhcp pool LAN",
+        "network 192.168.1.0 255.255.255.0",
+        "default-router 192.168.1.1",
+        "dns-server 8.8.8.8",
+        "exit"
+      ]
+    }
+    // Include other labs
+  }
+}
