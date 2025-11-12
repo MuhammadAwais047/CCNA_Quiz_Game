@@ -1,18 +1,18 @@
 {
   "name": "CCNA Mastery Pro",
   "short_name": "CCNA Pro",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0e1a",
   "theme_color": "#00d4ff",
   "icons": [
     {
-      "src": "assets/icons/icon-192.png",
+      "src": "https://img.icons8.com/fluency/192/cisco.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-512.png",
+      "src": "https://img.icons8.com/fluency/512/cisco.png",
       "sizes": "512x512",
       "type": "image/png"
     }
