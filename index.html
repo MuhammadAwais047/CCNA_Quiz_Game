@@ -3,74 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCNA Mastery Pro</title>
-    <link rel="manifest" href="/manifest.json">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="app.css">
-    <meta name="theme-color" content="#00d4ff">
+    <title>CCNA Mastery Pro - Interactive Learning Platform</title>
+    <meta http-equiv="refresh" content="0; url=ccna-mastery-pro.html">
     <style>
-        /* Loading screen styles */
-        .loading-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        body {
+            font-family: 'Inter', sans-serif;
             background: #0a0e1a;
+            color: #ffffff;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s;
+            height: 100vh;
+            margin: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+        }
+        .loading {
+            text-align: center;
         }
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(0, 212, 255, 0.3);
-            border-top: 4px solid #00d4ff;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 212, 255, 0.3);
+            border-top: 3px solid #00d4ff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 30px;
+            margin: 0 auto 20px;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .loading-text {
-            color: #ffffff;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.5rem;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        p {
+            color: #b8c5d1;
+            font-size: 1.1rem;
+        }
+        .redirect-link {
+            display: inline-block;
             margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .redirect-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
         }
     </style>
+<base target="_blank">
 </head>
 <body>
-    <div id="loading-screen" class="loading-container">
+    <div class="loading">
         <div class="spinner"></div>
-        <div class="loading-text">CCNA MASTERY PRO</div>
-        <p style="color: #b8c5d1; margin-top: 10px;">Loading learning platform...</p>
+        <h1>CCNA Mastery Pro</h1>
+        <p>Loading Interactive Learning Platform...</p>
+        <p>If you are not redirected automatically, <a href="ccna-mastery-pro.html" class="redirect-link">click here</a></p>
     </div>
-    
-    <div id="app-container" style="display: none;">
-        <!-- App content will be loaded here -->
-    </div>
-    
-    <!-- Audio Elements -->
-    <audio id="correctSound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="incorrectSound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="successSound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="clickSound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
-    </audio>
-    
-    <script src="app.js"></script>
+    <script>
+        // Fallback redirect in case meta refresh doesn't work
+        setTimeout(function() {
+            window.location.href = 'ccna-mastery-pro.html';
+        }, 2000);
+    </script>
 </body>
 </html>
