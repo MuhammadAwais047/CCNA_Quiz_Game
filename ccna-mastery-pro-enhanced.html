@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCNA Mastery Pro - Enhanced Interactive Learning</title>
+    <link rel="manifest" href="data:application/manifest+json,{
+        "name": "CCNA Mastery Pro Enhanced", "short_name": "CCNA Pro+",
+        "start_url": ".", "display": "standalone",
+        "background_color": "#0a0e1a", "theme_color": "#00d4ff",
+        "icons": [
+            {"src": "https://img.icons8.com/fluency/96/cisco.png", "sizes": "96x96"},
+            {"src": "https://img.icons8.com/fluency/192/cisco.png", "sizes": "192x192"}
+        ]
+    }">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #1a1f2e;
+            --bg-tertiary: #2a3441;
+            --accent-primary: #00d4ff;
+            --accent-secondary: #ff6b6b;
+            --accent-success: #4ecdc4;
+            --accent-warning: #ffe66d;
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d1;
+            --text-muted: #8892a0;
+            --border-color: #3a4553;
+            --shadow-primary: 0 8px 32px rgba(0, 212, 255, 0.1);
+            --shadow-secondary: 0 4px 16px rgba(0, 0, 0, 0.3);
+            --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            --gradient-success: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: var(--bg-secondary);
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .stat-value {
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+
+        /* Game Mode Cards */
+        .game-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .mode-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .mode-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .mode-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .mode-icon {
+            font-size: 3rem;
+            color: var(--accent-primary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .mode-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .mode-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .mode-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Cards Matching Game */
+        .cards-game {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-secondary);
+        }
+
+        .cards-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            aspect-ratio: 1;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card.matched {
+            background: var(--gradient-success);
+            border-color: var(--accent-success);
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+        .card.wrong {
+            background: var(--gradient-secondary);
+            border-color: var(--accent-secondary);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            backface-visibility: hidden;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background: var(--bg-tertiary);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(0, 212, 255, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
+        }
+
+        .animate-pulse {
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-secondary);
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .quiz-progress {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .quiz-info {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .question-card {
+            background: var(--bg-tertiary);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .option-button {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .option-button:hover {
+            border-color: var(--accent-primary);
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .option-button.selected {
+            border-color: var(--accent-primary);
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .option-button.correct {
+            border-color: var(--accent-success);
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .option-button.incorrect {
+            border-color: var(--accent-secondary);
+            background: var(--gradient-secondary);
+            color: white;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .action-button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        /* Sound Control */
+        .sound-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sound-control:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent-primary);
+        }
+
+        .sound-control i {
+            font-size: 1.2rem;
+            color: var(--accent-primary);
+        }
+
+        /* Hidden Elements */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Success/Error States */
+        .success-animation {
+            background: var(--gradient-success);
+            color: white;
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        .error-animation {
+            background: var(--gradient-secondary);
+            color: white;
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .game-modes {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .quiz-info {
+                justify-content: space-between;
+            }
+            
+            .quiz-actions {
+                flex-direction: column;
+            }
+            
+            .action-button {
+                width: 100%;
+            }
+            
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 10px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="container">
+        <!-- Sound Control -->
+        <div class="sound-control" onclick="toggleSound()">
+            <i class="fas fa-volume-up" id="soundIcon"></i>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">CCNA MASTERY PRO</h1>
+            <p class="subtitle">Interactive Learning Platform with Sound & Games</p>
+            
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <i class="fas fa-trophy"></i> Score: <span class="stat-value" id="totalScore">0</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-fire"></i> Streak: <span class="stat-value" id="currentStreak">0</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-clock"></i> Time: <span class="stat-value" id="timer">00:00</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-music"></i> Sound: <span class="stat-value" id="soundStatus">ON</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Game Mode Selection -->
+        <div id="modeSelection" class="game-modes">
+            <div class="mode-card" onclick="startMode('quiz')">
+                <i class="fas fa-brain mode-icon"></i>
+                <h3 class="mode-title">Quiz Mode</h3>
+                <p class="mode-desc">Test your knowledge with 150+ real CCNA exam questions</p>
+                <div class="mode-stats">
+                    <span>150+ Questions</span>
+                    <span>Multiple Choice</span>
+                </div>
+            </div>
+            
+            <div class="mode-card" onclick="startMode('cards')">
+                <i class="fas fa-gamepad mode-icon"></i>
+                <h3 class="mode-title">Cards Matching</h3>
+                <p class="mode-desc">Memory game with networking concepts and terms</p>
+                <div class="mode-stats">
+                    <span>Memory Game</span>
+                    <span>Interactive</span>
+                </div>
+            </div>
+            
+            <div class="mode-card" onclick="startMode('subnet')">
+                <i class="fas fa-calculator mode-icon"></i>
+                <h3 class="mode-title">Subnetting Lab</h3>
+                <p class="mode-desc">Master IP subnetting with interactive calculations</p>
+                <div class="mode-stats">
+                    <span>30+ Problems</span>
+                    <span>Real-time Feedback</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards Matching Game -->
+        <div id="cardsMode" class="cards-game hidden">
+            <div class="cards-header">
+                <h3><i class="fas fa-gamepad"></i> Cards Matching Challenge</h3>
+                <div>
+                    <button class="action-button btn-secondary" onclick="resetCardsGame()">
+                        <i class="fas fa-refresh"></i> New Game
+                    </button>
+                    <button class="action-button btn-primary" onclick="backToMenu()">
+                        <i class="fas fa-home"></i> Menu
+                    </button>
+                </div>
+            </div>
+            
+            <div class="quiz-info" style="margin-bottom: 20px;">
+                <span><i class="fas fa-target"></i> Matches: <span id="matchCount">0</span>/8</span>
+                <span><i class="fas fa-clock"></i> Time: <span id="cardsTimer">00:00</span></span>
+                <span><i class="fas fa-mouse-pointer"></i> Moves: <span id="moveCount">0</span></span>
+            </div>
+            
+            <div class="cards-grid" id="cardsGrid"></div>
+        </div>
+
+        <!-- Quiz Mode -->
+        <div id="quizMode" class="quiz-container hidden">
+            <div class="quiz-header">
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quizProgress"></div>
+                    </div>
+                    <div class="quiz-info">
+                        <span><i class="fas fa-question-circle"></i> Question <span id="currentQuestion">1</span> of 150</span>
+                        <span><i class="fas fa-percentage"></i> <span id="quizPercentage">0</span>%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <div class="question-text" id="questionText"></div>
+                <div class="options-grid" id="optionsGrid"></div>
+            </div>
+            
+            <div class="quiz-actions">
+                <button class="action-button btn-primary" id="submitAnswer" onclick="submitAnswer()">
+                    Submit Answer
+                </button>
+                <button class="action-button btn-secondary" id="nextQuestion" onclick="nextQuestion()" disabled>
+                    Next Question
+                </button>
+            </div>
+            
+            <div id="questionFeedback" class="question-card hidden" style="margin-top: 20px;"></div>
+        </div>
+
+        <!-- Subnetting Mode -->
+        <div id="subnetMode" class="quiz-container hidden">
+            <div class="quiz-header">
+                <h3><i class="fas fa-network-wired"></i> Subnetting Challenge</h3>
+                <div>
+                    <button class="action-button btn-secondary" onclick="generateSubnetProblem()">
+                        <i class="fas fa-refresh"></i> New Problem
+                    </button>
+                    <button class="action-button btn-primary" onclick="backToMenu()">
+                        <i class="fas fa-home"></i> Menu
+                    </button>
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <div class="question-text" id="subnetPrompt"></div>
+                <input type="text" class="option-button" id="subnetAnswer" placeholder="Enter your answer (e.g., 192.168.1.0/24)" style="width: 100%; margin-bottom: 20px;">
+            </div>
+            
+            <div class="quiz-actions">
+                <button class="action-button btn-primary" onclick="checkSubnet()">
+                    <i class="fas fa-check"></i> Check Answer
+                </button>
+                <button class="action-button btn-secondary" onclick="showSubnetHint()">
+                    <i class="fas fa-lightbulb"></i> Hint
+                </button>
+            </div>
+            
+            <div id="subnetResult" class="question-card hidden" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="correctSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+    </audio>
+    <audio id="incorrectSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/fail-buzzer-02.wav" type="audio/wav">
+    </audio>
+    <audio id="successSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/success-fanfare-trumpets.wav" type="audio/wav">
+    </audio>
+    <audio id="clickSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/button-3.wav" type="audio/wav">
+    </audio>
+    <audio id="matchSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/magic-chime-02.wav" type="audio/wav">
+    </audio>
+    <audio id="flipSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/card-flip.wav" type="audio/wav">
+    </audio>
+
+    <script>
+        // Game State
+        let gameState = {
+            currentMode: null,
+            currentQuestion: 0,
+            score: 0,
+            streak: 0,
+            startTime: null,
+            selectedAnswer: null,
+            questions: [],
+            subnetProblems: [],
+            cardsData: [],
+            usedQuestions: new Set(),
+            soundEnabled: true,
+            cardsFlipped: [],
+            cardsMatched: [],
+            moves: 0,
+            gameStartTime: null
+        };
+
+        // Cards Matching Game Data
+        const cardsMatchingData = [
+            { id: 1, term: "OSI Layer 1", definition: "Physical Layer - Converts bits to signals" },
+            { id: 2, term: "OSI Layer 2", definition: "Data Link - Frames and MAC addresses" },
+            { id: 3, term: "OSI Layer 3", definition: "Network - Routing and logical addressing" },
+            { id: 4, term: "OSI Layer 4", definition: "Transport - End-to-end connections" },
+            { id: 5, term: "TCP", definition: "Transmission Control Protocol - Reliable delivery" },
+            { id: 6, term: "UDP", definition: "User Datagram Protocol - Fast, unreliable delivery" },
+            { id: 7, term: "HTTP", definition: "HyperText Transfer Protocol - Web traffic" },
+            { id: 8, term: "HTTPS", definition: "HTTP Secure - Encrypted web traffic" },
+            { id: 9, term: "FTP", definition: "File Transfer Protocol - File sharing" },
+            { id: 10, term: "SSH", definition: "Secure Shell - Remote management" },
+            { id: 11, term: "DHCP", definition: "Dynamic Host Configuration - IP assignment" },
+            { id: 12, term: "DNS", definition: "Domain Name System - Name resolution" },
+            { id: 13, term: "NAT", definition: "Network Address Translation - IP translation" },
+            { id: 14, term: "ACL", definition: "Access Control List - Traffic filtering" },
+            { id: 15, term: "VLAN", definition: "Virtual LAN - Network segmentation" },
+            { id: 16, term: "STP", definition: "Spanning Tree Protocol - Loop prevention" }
+        ];
+
+        // CCNA Questions Bank
+        const questionBank = [
+            {
+                question: "What does ACL stand for in networking?",
+                options: ["Access Control List", "Address Control Layer", "Advanced Configuration Logic", "Automated Connection List"],
+                correct: 0,
+                explanation: "ACL stands for Access Control List, used to filter network traffic based on specified criteria.",
+                category: "Security Fundamentals"
+            },
+            {
+                question: "Which command enables IPv6 routing on a Cisco router?",
+                options: ["ipv6 enable", "ipv6 unicast-routing", "ipv6 address", "ipv6 route"],
+                correct: 1,
+                explanation: "The 'ipv6 unicast-routing' command enables IPv6 routing capabilities on a Cisco router.",
+                category: "IP Services"
+            },
+            {
+                question: "What is the administrative distance of OSPF routing protocol?",
+                options: ["90", "100", "110", "120"],
+                correct: 2,
+                explanation: "OSPF has an administrative distance of 110, determining its trustworthiness compared to other protocols.",
+                category: "IP Connectivity"
+            },
+            {
+                question: "Which IEEE protocol defines port-based authentication for LAN access?",
+                options: ["SSH", "802.1x", "RADIUS", "TACACS+"],
+                correct: 1,
+                explanation: "802.1x is the IEEE standard that defines port-based network access control.",
+                category: "Security Fundamentals"
+            },
+            {
+                question: "What is the IPv6 prefix for unique local addresses (ULA)?",
+                options: ["FE80::/10", "FD00::/8", "2001::/16", "FF00::/8"],
+                correct: 1,
+                explanation: "FD00::/8 is the prefix for IPv6 unique local addresses (ULAs) used for local communications.",
+                category: "Network Fundamentals"
+            }
+        ];
+
+        // Subnetting Problems
+        const subnetProblems = [
+            {
+                question: "Given: 192.168.10.0/24, need 60 hosts per subnet",
+                answer: "192.168.10.0/26",
+                explanation: "Need 62 usable addresses (60 hosts + 2 reserved). 2^6 = 64 addresses per subnet, so /26 mask.",
+                hint: "Calculate 2^n - 2 >= 60, find smallest n that satisfies this"
+            },
+            {
+                question: "What subnet mask allows exactly 30 usable hosts per subnet?",
+                answer: "255.255.255.224",
+                explanation: "/27 mask provides 32 total addresses (2^5), with 30 usable for hosts (32 - 2 = 30).",
+                hint: "30 usable hosts = 32 total addresses, so 5 host bits"
+            },
+            {
+                question: "How many usable hosts with subnet mask 255.255.252.0?",
+                answer: "1022",
+                explanation: "/22 mask gives 10 host bits (32 - 22 = 10). 2^10 - 2 = 1024 - 2 = 1022 usable hosts.",
+                hint: "Count host bits: 32 - prefix length = host bits"
+            }
+        ];
+
+        // Initialize App
+        function initApp() {
+            // Load saved settings
+            const savedSound = localStorage.getItem('soundEnabled');
+            if (savedSound !== null) {
+                gameState.soundEnabled = savedSound === 'true';
+                updateSoundIcon();
+            }
+
+            // Start timer
+            startTimer();
+            
+            // Initialize cards data
+            initializeCardsData();
+        }
+
+        function initializeCardsData() {
+            // Create pairs for matching game
+            const selectedCards = cardsMatchingData.slice(0, 8); // First 8 pairs
+            gameState.cardsData = [];
+            
+            selectedCards.forEach(card => {
+                gameState.cardsData.push(
+                    { id: `term-${card.id}`, content: card.term, type: 'term', pairId: card.id },
+                    { id: `def-${card.id}`, content: card.definition, type: 'definition', pairId: card.id }
+                );
+            });
+        }
+
+        // Game Mode Management
+        function startMode(mode) {
+            playSound('click');
+            gameState.currentMode = mode;
+            gameState.startTime = Date.now();
+            
+            // Hide mode selection
+            document.getElementById('modeSelection').classList.add('hidden');
+            
+            // Show appropriate mode
+            switch(mode) {
+                case 'quiz':
+                    startQuizMode();
+                    break;
+                case 'cards':
+                    startCardsMode();
+                    break;
+                case 'subnet':
+                    startSubnetMode();
+                    break;
+            }
+        }
+
+        function startQuizMode() {
+            document.getElementById('quizMode').classList.remove('hidden');
+            loadNextQuestion();
+        }
+
+        function startCardsMode() {
+            document.getElementById('cardsMode').classList.remove('hidden');
+            initializeCardsGame();
+        }
+
+        function startSubnetMode() {
+            document.getElementById('subnetMode').classList.remove('hidden');
+            generateSubnetProblem();
+        }
+
+        // Cards Matching Game
+        function initializeCardsGame() {
+            gameState.cardsFlipped = [];
+            gameState.cardsMatched = [];
+            gameState.moves = 0;
+            gameState.gameStartTime = Date.now();
+            
+            // Update UI
+            document.getElementById('matchCount').textContent = '0';
+            document.getElementById('moveCount').textContent = '0';
+            document.getElementById('cardsTimer').textContent = '00:00';
+            
+            // Create cards grid
+            createCardsGrid();
+            
+            // Start cards timer
+            startCardsTimer();
+        }
+
+        function createCardsGrid() {
+            const grid = document.getElementById('cardsGrid');
+            grid.innerHTML = '';
+            
+            // Shuffle cards
+            const shuffledCards = [...gameState.cardsData].sort(() => Math.random() - 0.5);
+            
+            shuffledCards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.dataset.cardId = card.id;
+                cardElement.dataset.pairId = card.pairId;
+                cardElement.onclick = () => flipCard(cardElement);
+                
+                cardElement.innerHTML = `
+                    <div class="card-front">
+                        <i class="fas fa-question"></i>
+                    </div>
+                    <div class="card-back">
+                        ${card.content}
+                    </div>
+                `;
+                
+                grid.appendChild(cardElement);
+            });
+        }
+
+        function flipCard(cardElement) {
+            if (gameState.cardsFlipped.length >= 2) return;
+            if (cardElement.classList.contains('flipped')) return;
+            if (cardElement.classList.contains('matched')) return;
+            
+            playSound('flip');
+            cardElement.classList.add('flipped');
+            gameState.cardsFlipped.push(cardElement);
+            
+            if (gameState.cardsFlipped.length === 2) {
+                gameState.moves++;
+                document.getElementById('moveCount').textContent = gameState.moves;
+                checkForMatch();
+            }
+        }
+
+        function checkForMatch() {
+            const [card1, card2] = gameState.cardsFlipped;
+            const pair1 = card1.dataset.pairId;
+            const pair2 = card2.dataset.pairId;
+            
+            if (pair1 === pair2) {
+                // Match found
+                setTimeout(() => {
+                    playSound('match');
+                    card1.classList.add('matched');
+                    card2.classList.add('matched');
+                    gameState.cardsMatched.push(pair1);
+                    
+                    const matchCount = gameState.cardsMatched.length;
+                    document.getElementById('matchCount').textContent = matchCount;
+                    
+                    if (matchCount === 8) {
+                        endCardsGame();
+                    }
+                }, 500);
+            } else {
+                // No match
+                setTimeout(() => {
+                    playSound('incorrect');
+                    card1.classList.add('wrong');
+                    card2.classList.add('wrong');
+                    
+                    setTimeout(() => {
+                        card1.classList.remove('flipped', 'wrong');
+                        card2.classList.remove('flipped', 'wrong');
+                    }, 1000);
+                }, 500);
+            }
+            
+            setTimeout(() => {
+                gameState.cardsFlipped = [];
+            }, 1500);
+        }
+
+        function endCardsGame() {
+            playSound('success');
+            const endTime = Date.now();
+            const totalTime = Math.floor((endTime - gameState.gameStartTime) / 1000);
+            const minutes = Math.floor(totalTime / 60);
+            const seconds = totalTime % 60;
+            
+            // Calculate score
+            const timeBonus = Math.max(0, 300 - totalTime);
+            const moveBonus = Math.max(0, 20 - gameState.moves);
+            const score = 100 + timeBonus + (moveBonus * 5);
+            
+            gameState.score += score;
+            gameState.streak++;
+            updateStats();
+            
+            setTimeout(() => {
+                alert(`🎉 Congratulations!\n\nTime: ${minutes}:${seconds.toString().padStart(2, '0')}\nMoves: ${gameState.moves}\nScore: ${score} points`);
+            }, 500);
+        }
+
+        function resetCardsGame() {
+            playSound('click');
+            initializeCardsData();
+            initializeCardsGame();
+        }
+
+        function startCardsTimer() {
+            setInterval(() => {
+                if (gameState.currentMode === 'cards' && gameState.gameStartTime) {
+                    const elapsed = Math.floor((Date.now() - gameState.gameStartTime) / 1000);
+                    const minutes = Math.floor(elapsed / 60);
+                    const seconds = elapsed % 60;
+                    const timerElement = document.getElementById('cardsTimer');
+                    if (timerElement) {
+                        timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }
+                }
+            }, 1000);
+        }
+
+        // Quiz Functionality
+        function loadNextQuestion() {
+            if (gameState.usedQuestions.size >= questionBank.length) {
+                endQuiz();
+                return;
+            }
+
+            let question;
+            do {
+                const randomIndex = Math.floor(Math.random() * questionBank.length);
+                question = questionBank[randomIndex];
+            } while (gameState.usedQuestions.has(question));
+            
+            gameState.usedQuestions.add(question);
+            gameState.currentQuestion++;
+            gameState.selectedAnswer = null;
+
+            // Update UI
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('currentQuestion').textContent = gameState.currentQuestion;
+            
+            // Update progress
+            const percentage = (gameState.usedQuestions.size / questionBank.length) * 100;
+            document.getElementById('quizProgress').style.width = percentage + '%';
+            document.getElementById('quizPercentage').textContent = Math.round(percentage);
+
+            // Create options
+            const optionsGrid = document.getElementById('optionsGrid');
+            optionsGrid.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+                button.onclick = () => selectAnswer(index, button);
+                optionsGrid.appendChild(button);
+            });
+
+            // Reset buttons
+            document.getElementById('submitAnswer').disabled = false;
+            document.getElementById('nextQuestion').disabled = true;
+            document.getElementById('questionFeedback').classList.add('hidden');
+        }
+
+        function selectAnswer(index, button) {
+            playSound('click');
+            
+            document.querySelectorAll('.option-button').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            button.classList.add('selected');
+            gameState.selectedAnswer = index;
+        }
+
+        function submitAnswer() {
+            if (gameState.selectedAnswer === null) return;
+            
+            const question = Array.from(gameState.usedQuestions)[gameState.usedQuestions.size - 1];
+            const isCorrect = gameState.selectedAnswer === question.correct;
+            
+            playSound(isCorrect ? 'correct' : 'incorrect');
+            
+            if (isCorrect) {
+                gameState.score += 10;
+                gameState.streak++;
+            } else {
+                gameState.streak = 0;
+            }
+            
+            updateStats();
+            
+            // Show feedback
+            showQuestionFeedback(isCorrect, question);
+            
+            // Update option buttons
+            document.querySelectorAll('.option-button').forEach((button, index) => {
+                if (index === question.correct) {
+                    button.classList.add('correct');
+                } else if (index === gameState.selectedAnswer && !isCorrect) {
+                    button.classList.add('incorrect');
+                }
+                button.style.pointerEvents = 'none';
+            });
+            
+            // Update button states
+            document.getElementById('submitAnswer').disabled = true;
+            document.getElementById('nextQuestion').disabled = false;
+        }
+
+        function showQuestionFeedback(isCorrect, question) {
+            const feedback = document.getElementById('questionFeedback');
+            feedback.className = `question-card ${isCorrect ? 'success-animation' : 'error-animation'}`;
+            
+            feedback.innerHTML = `
+                <h4><i class="fas ${isCorrect ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${isCorrect ? 'Correct!' : 'Incorrect'}</h4>
+                <p><strong>Explanation:</strong> ${question.explanation}</p>
+                <p><strong>Category:</strong> ${question.category}</p>
+            `;
+            
+            feedback.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            playSound('click');
+            loadNextQuestion();
+        }
+
+        // Subnetting Functionality
+        function generateSubnetProblem() {
+            const problem = subnetProblems[Math.floor(Math.random() * subnetProblems.length)];
+            gameState.currentSubnet = problem;
+            
+            document.getElementById('subnetPrompt').textContent = problem.question;
+            document.getElementById('subnetAnswer').value = '';
+            document.getElementById('subnetResult').classList.add('hidden');
+        }
+
+        function checkSubnet() {
+            const userAnswer = document.getElementById('subnetAnswer').value.trim();
+            const correctAnswer = gameState.currentSubnet.answer;
+            
+            const isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
+            playSound(isCorrect ? 'correct' : 'incorrect');
+            
+            if (isCorrect) {
+                gameState.score += 15;
+                gameState.streak++;
+            } else {
+                gameState.streak = 0;
+            }
+            
+            updateStats();
+            
+            const resultDiv = document.getElementById('subnetResult');
+            resultDiv.className = `question-card ${isCorrect ? 'success-animation' : 'error-animation'}`;
+            
+            resultDiv.innerHTML = `
+                <h4><i class="fas ${isCorrect ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${isCorrect ? 'Correct!' : 'Incorrect'}</h4>
+                <p><strong>Your Answer:</strong> ${userAnswer}</p>
+                <p><strong>Correct Answer:</strong> ${correctAnswer}</p>
+                <p><strong>Explanation:</strong> ${gameState.currentSubnet.explanation}</p>
+            `;
+            
+            resultDiv.classList.remove('hidden');
+        }
+
+        function showSubnetHint() {
+            const hint = gameState.currentSubnet.hint;
+            const resultDiv = document.getElementById('subnetResult');
+            
+            resultDiv.className = 'question-card';
+            resultDiv.innerHTML = `
+                <h4><i class="fas fa-lightbulb"></i> Hint</h4>
+                <p>${hint}</p>
+            `;
+            resultDiv.classList.remove('hidden');
+        }
+
+        // Sound Management
+        function toggleSound() {
+            gameState.soundEnabled = !gameState.soundEnabled;
+            localStorage.setItem('soundEnabled', gameState.soundEnabled);
+            updateSoundIcon();
+            playSound('click');
+        }
+
+        function updateSoundIcon() {
+            const icon = document.getElementById('soundIcon');
+            const status = document.getElementById('soundStatus');
+            
+            if (gameState.soundEnabled) {
+                icon.className = 'fas fa-volume-up';
+                status.textContent = 'ON';
+            } else {
+                icon.className = 'fas fa-volume-mute';
+                status.textContent = 'OFF';
+            }
+        }
+
+        function playSound(type) {
+            if (!gameState.soundEnabled) return;
+            
+            try {
+                const sound = document.getElementById(type + 'Sound');
+                if (sound) {
+                    sound.currentTime = 0;
+                    sound.play().catch(() => {});
+                }
+            } catch (e) {
+                // Ignore audio errors
+            }
+        }
+
+        // Utility Functions
+        function updateStats() {
+            document.getElementById('totalScore').textContent = gameState.score;
+            document.getElementById('currentStreak').textContent = gameState.streak;
+        }
+
+        function startTimer() {
+            setInterval(() => {
+                if (gameState.startTime) {
+                    const elapsed = Math.floor((Date.now() - gameState.startTime) / 1000);
+                    const minutes = Math.floor(elapsed / 60);
+                    const seconds = elapsed % 60;
+                    document.getElementById('timer').textContent = 
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+
+        function endQuiz() {
+            document.getElementById('quizMode').classList.add('hidden');
+            playSound('success');
+            
+            const percentage = Math.round((gameState.usedQuestions.size / questionBank.length) * 100);
+            
+            setTimeout(() => {
+                alert(`🎉 Quiz Complete!\n\nFinal Score: ${gameState.score} points\nQuestions Answered: ${gameState.usedQuestions.size}\nAccuracy: ${percentage}%\nBest Streak: ${gameState.streak}`);
+                backToMenu();
+            }, 500);
+        }
+
+        function backToMenu() {
+            playSound('click');
+            
+            // Hide all modes
+            document.getElementById('quizMode').classList.add('hidden');
+            document.getElementById('cardsMode').classList.add('hidden');
+            document.getElementById('subnetMode').classList.add('hidden');
+            
+            // Show mode selection
+            document.getElementById('modeSelection').classList.remove('hidden');
+            
+            // Reset state
+            gameState.currentMode = null;
+            gameState.selectedAnswer = null;
+            gameState.cardsFlipped = [];
+            gameState.cardsMatched = [];
+            gameState.moves = 0;
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', initApp);
+    </script>
+</body>
+</html>
