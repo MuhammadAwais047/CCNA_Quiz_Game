@@ -1,21 +1,20 @@
+// CCNA Mastery Pro Service Worker
 const CACHE_NAME = 'ccna-mastery-pro-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/ccna-mastery-pro.html',
   '/app.css',
   '/app.js',
-  '/data.json',
-  '/manifest.json',
-  '/assets/icons/icon-192.png',
-  '/assets/icons/icon-512.png'
+  '/data.json'
 ];
 
 // Install service worker and cache files
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+      .then(cache => {
+        return cache.addAll(urlsToCache);
+      })
       .then(() => self.skipWaiting())
   );
 });
