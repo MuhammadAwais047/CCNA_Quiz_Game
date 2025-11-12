@@ -2,106 +2,398 @@
   "questions": [
     {
       "type": "mc",
+      "q": "What is the purpose of the DNS (Domain Name System) in a network?",
+      "o": [
+        "To assign IP addresses dynamically",
+        "To map domain names to IP addresses",
+        "To encrypt data for secure transmission",
+        "To facilitate routing between different networks"
+      ],
+      "a": 1,
+      "e": "DNS translates domain names into IP addresses, a fundamental service for network communication."
+    },
+    {
+      "type": "mc",
+      "q": "What is the purpose of traffic shaping?",
+      "o": [
+        "to mitigate delays over slow links",
+        "to provide fair queuing for buffered flows",
+        "to limit the bandwidth that a flow can use to",
+        "be a marking mechanism that identifies different flows"
+      ],
+      "a": 1,
+      "e": "Traffic shaping retains excess packets in a queue and then schedules the excess for later transmission over increments of time, which effectively provides fair queuing for buffered flows."
+    },
+    {
+      "type": "mc",
+      "q": "what occurs to frames during the process of frame flooding?",
+      "o": [
+        "Frames are sent to every port on the switch in the same VLAN except from the originating port",
+        "Frames are sent to every port on the switch that has a matching entry in the MAC address table.",
+        "Frames are sent to all ports, including those that are assigned to other VLANs.",
+        "Frames are sent to every port on the switch in the same VLAN."
+      ],
+      "a": 0,
+      "e": "Frame flooding occurs for broadcast, multicast, or unknown unicast frames, sending them out all ports in the same VLAN except the ingress port."
+    },
+    {
+      "type": "mc",
+      "q": "What software defined architecture plane assists network devices with making packet-forwarding decisions by providing Layer 2 reachability and Layer 3 routing information?",
+      "o": [
+        "data plane",
+        "control plane",
+        "policy plane",
+        "management plane"
+      ],
+      "a": 1,
+      "e": "The **control plane** is responsible for building and maintaining the forwarding tables (MAC address table, routing table) that the data plane uses to make forwarding decisions."
+    },
+    {
+      "type": "mc",
+      "q": "Which switch in this configuration will be elected as the root bridge? SW1: 0C:E0:38:00:94:04, SW2: 0C:0E:15:22:05:97, SW3: 0C:0E:15:1A:3C:9D, SW4: 0C:E0:18:A1:B3:19",
+      "o": [
+        "SW1",
+        "SW2",
+        "SW3",
+        "SW4"
+      ],
+      "a": 1,
+      "e": "The root bridge is elected based on the lowest Bridge ID (Priority + MAC Address). Assuming default priorities, the switch with the numerically lowest MAC address is chosen. SW2 (0C:0E:15:22:05:97) has the lowest MAC address among the choices."
+    },
+    {
+      "type": "mc",
+      "q": "What is the purpose of the ICMP protocol in networking?",
+      "o": [
+        "Manage IP addresses dynamically",
+        "Encrypt data for secure transmission",
+        "Troubleshoot and diagnose network connectivity issues",
+        "Provide secure remote access"
+      ],
+      "a": 2,
+      "e": "ICMP (Internet Control Message Protocol) is used for network diagnostics and troubleshooting, such as sending error messages and operational information (e.g., the ping utility)."
+    },
+    {
+      "type": "mc",
+      "q": "Which state does the switch port move to when PortFast is enabled?",
+      "o": [
+        "learning",
+        "forwarding",
+        "blocking",
+        "listening"
+      ],
+      "a": 1,
+      "e": "PortFast causes an STP-enabled port to immediately transition from blocking to the **forwarding** state, skipping the listening and learning states, to minimize connectivity delay for end-user devices."
+    },
+    {
+      "type": "mc",
+      "q": "Which device operates at Layer 2 of the OSI model?",
+      "o": [
+        "Hub",
+        "Router",
+        "Switch",
+        "Firewall"
+      ],
+      "a": 2,
+      "e": "A **Switch** operates at Layer 2 (Data Link Layer) using MAC addresses for frame forwarding."
+    },
+    {
+      "type": "mc",
+      "q": "What must be considered when using 802.11a?",
+      "o": [
+        "It is compatible with 802.11b- and 802.11g-compliant wireless devices",
+        "It is used in place of 802.11b/g when many nonoverlapping channels are required",
+        "It is susceptible to interference from 2.4 GHz devices such as microwave ovens.",
+        "It is chosen over 802.11b/g when a lower-cost solution is necessary"
+      ],
+      "a": 1,
+      "e": "802.11a operates in the 5 GHz band, which provides more non-overlapping channels than the 2.4 GHz band used by 802.11b/g."
+    },
+    {
+      "type": "mc",
+      "q": "Which WAN topology provides a combination of simplicity, quality, and availability?",
+      "o": [
+        "partial mesh",
+        "full mesh",
+        "point-to-point",
+        "hub-and-spoke"
+      ],
+      "a": 0,
+      "e": "A **partial mesh** offers redundancy and availability without the high cost and complexity of a full mesh."
+    },
+    {
+      "type": "mc",
+      "q": "What is a characteristic of a SOHO network?",
+      "o": [
+        "connects each switch to every other switch in the network",
+        "enables multiple users to share a single broadband connection",
+        "provides high throughput access for 1000 or more users",
+        "includes at least three tiers of devices to provide load balancing and redundancy"
+      ],
+      "a": 1,
+      "e": "A SOHO (Small Office/Home Office) network typically focuses on basic connectivity, enabling multiple users to share a single broadband connection."
+    },
+    {
+      "type": "mc",
+      "q": "Which state does the switch port move to when PortFast is enabled?",
+      "o": [
+        "forwarding",
+        "listening",
+        "blocking",
+        "learning"
+      ],
+      "a": 0,
+      "e": "PortFast causes the switch port to move immediately to the **forwarding** state, skipping the listening and learning states."
+    },
+    {
+      "type": "mc",
+      "q": "When PC-A sends traffic to PC-B, which network component is in charge of receiving the packet from PC-A, verifying the IP addresses, and forwarding the packet to PC-B?",
+      "o": [
+        "Layer 2 switch",
+        "Router",
+        "Load balancer",
+        "firewall"
+      ],
+      "a": 1,
+      "e": "Since PC-A (10.10.10.0/24) and PC-B (10.10.100.0/24) are on different subnets, a **Router** is required to route traffic between them at Layer 3."
+    },
+    {
+      "type": "mc",
+      "q": "What are two roles of the Dynamic Host Configuration Protocol (DHCP)? (Choose two)",
+      "o": [
+        "The DHCP server offers the ability to exclude specific IP addresses from a pool of IP addresses",
+        "The DHCP client can request up to four DNS server addresses",
+        "The DHCP server assigns IP addresses without requiring the client to renew them",
+        "The DHCP server leases client IP addresses dynamically.",
+        "The DHCP client maintains a pool of IP addresses it can assign."
+      ],
+      "a": [0, 3],
+      "e": "DHCP servers dynamically **lease** IP addresses (D) and allow administrators to **exclude** specific IP addresses from the available pool (A)."
+    },
+    {
+      "type": "mc",
+      "q": "What is the purpose of NAT (Network Address Translation) in networking?",
+      "o": [
+        "To map private IP addresses to public IP addresses",
+        "To encrypt data in transit",
+        "To manage IP addresses dynamically",
+        "To establish secure connections between devices"
+      ],
+      "a": 0,
+      "e": "NAT's primary role is to translate non-routable private IP addresses used internally into routable public IP addresses for external communication."
+    },
+    {
+      "type": "mc",
+      "q": "Which command set establishes failover redundancy if the primary circuit goes down?",
+      "o": [
+        "R1(config)#ip route 0.0.0.0 0.0.0.0 10.10.10.6 2\nR2(config)#ip route 0.0.0.0 0.0.0.0 10.10.10.5 2",
+        "R1(config)#ip route 10.10.13.10 255.255.255.255 10.10.10.6\nR2(config)#ip route 192.168.0.100 255.255.255.255 10.10.10.5",
+        "R1(config)#ip route 0.0.0.0 0.0.0.0 10.10.10.6\nR2(config)#ip route 0.0.0.0 0.0.0.0 10.10.10.5",
+        "R1(config)#ip route 10.10.13.10 255.255.255.255 10.10.10.2\nR2(config)#ip route 192.168.0.100 255.255.255.255 10.10.10.1"
+      ],
+      "a": 0,
+      "e": "To configure failover redundancy, a **floating static route** must be used. This involves defining a second default route (`0.0.0.0 0.0.0.0`) with a higher Administrative Distance (AD), such as '2', so it is only used if the primary route (AD 1) fails."
+    },
+    {
+      "type": "mc",
+      "q": "What is the role of a firewall in an enterprise network?",
+      "o": [
+        "Forwards packets based on stateless packet inspection",
+        "Processes unauthorized packets and allows passage to less secure segments of the network",
+        "determines which packets are allowed to cross from unsecured to secured networks",
+        "explicitly denies all packets from entering an administrative domain"
+      ],
+      "a": 2,
+      "e": "The primary role of a firewall is to enforce security policy by controlling and determining which packets are permitted to cross between networks, such as between the internet (unsecured) and the internal network (secured)."
+    },
+    {
+      "type": "mc",
+      "q": "Which output displays a JSON data representation?",
+      "o": [
+        "{\n\"response\": {\n\"taskld\": 0;\n\"url\": \"string\"\n\"version\": \"string\"\n}\n}",
+        "{\n\"response\"- {\n\"taskld\"- (),\n\"url\"- \"string\"\n),\n\"version\"- \"string\"\n}",
+        "{\n\"response\": {\n\"taskld\": 0.\n\"url\": \"string\"\n},\n\"version\": \"string\"\n}",
+        "{\n\"response\": {\n\"taskld\": 0,\n\"url\": \"string\"\n},\n\"version\": \"string\"\n}"
+      ],
+      "a": 3,
+      "e": "Valid JSON uses colons (:) to separate keys and values and commas (,) to separate elements within an object or array. Option D is the only syntactically correct JSON representation."
+    },
+    {
+      "type": "mc",
       "q": "What does ACL stand for?",
-      "o": ["Access Control List", "Address Control Layer", "Advanced Configuration Logic", "Automated Connection List"],
+      "o": [
+        "Access Control List",
+        "Address Control Layer",
+        "Advanced Configuration Logic",
+        "Automated Connection List"
+      ],
       "a": 0,
       "e": "ACL stands for Access Control List, which is used to filter network traffic based on specified criteria."
     },
     {
       "type": "mc",
       "q": "Which command enables IPv6 routing on a Cisco router?",
-      "o": ["ipv6 enable", "ipv6 unicast-routing", "ipv6 address", "ipv6 route"],
+      "o": [
+        "ipv6 enable",
+        "ipv6 unicast-routing",
+        "ipv6 address",
+        "ipv6 route"
+      ],
       "a": 1,
       "e": "The ipv6 unicast-routing command enables IPv6 routing capabilities on a Cisco router."
     },
     {
       "type": "mc",
       "q": "What is the default violation mode for port security on a Cisco switch?",
-      "o": ["disabled", "shutdown", "protect", "restrict"],
+      "o": [
+        "disabled",
+        "shutdown",
+        "protect",
+        "restrict"
+      ],
       "a": 1,
       "e": "The default violation mode for port security is shutdown, which puts the port in error-disabled state when a violation occurs."
     },
     {
       "type": "mc",
       "q": "Which server is required for WPA2 Enterprise authentication?",
-      "o": ["AAA", "DHCP", "RADIUS", "SNMP"],
+      "o": [
+        "AAA",
+        "DHCP",
+        "RADIUS",
+        "SNMP"
+      ],
       "a": 2,
       "e": "RADIUS server is required for WPA2 Enterprise authentication to handle user authentication."
     },
     {
       "type": "mc",
       "q": "What is the administrative distance of OSPF?",
-      "o": ["90", "110", "120", "170"],
+      "o": [
+        "90",
+        "110",
+        "120",
+        "170"
+      ],
       "a": 1,
       "e": "OSPF has an administrative distance of 110, making it more preferred than RIP (120) but less than EIGRP (90)."
     },
     {
       "type": "mc",
       "q": "Which protocol defines port-based authentication for LAN access?",
-      "o": ["SSH", "802.1x", "RADIUS", "TACACS+"],
+      "o": [
+        "SSH",
+        "802.1x",
+        "RADIUS",
+        "TACACS+"
+      ],
       "a": 1,
       "e": "802.1x is the IEEE standard that defines port-based network access control."
     },
     {
       "type": "mc",
       "q": "What is the purpose of NAT?",
-      "o": ["Encrypt data", "Translate private to public IPs", "Provide wireless access", "Block malware"],
+      "o": [
+        "Encrypt data",
+        "Translate private to public IPs",
+        "Provide wireless access",
+        "Block malware"
+      ],
       "a": 1,
       "e": "NAT (Network Address Translation) translates private IP addresses to public IP addresses for internet communication."
     },
     {
       "type": "mc",
       "q": "Which command allows only SSH access on a router?",
-      "o": ["transport input ssh telnet", "transport input ssh", "transport input none", "no transport input telnet"],
+      "o": [
+        "transport input ssh telnet",
+        "transport input ssh",
+        "transport input none",
+        "no transport input telnet"
+      ],
       "a": 1,
       "e": "The command 'transport input ssh' allows only SSH access and disables other methods like Telnet."
     },
     {
       "type": "mc",
       "q": "What is the default queuing method on Cisco routers?",
-      "o": ["Weighted Fair Queuing", "First-In-First-Out", "Priority Queuing", "Custom Queuing"],
+      "o": [
+        "Weighted Fair Queuing",
+        "First-In-First-Out",
+        "Priority Queuing",
+        "Custom Queuing"
+      ],
       "a": 1,
       "e": "FIFO (First-In-First-Out) is the default queuing method where packets are sent in the order they arrive."
     },
     {
       "type": "mc",
       "q": "Which 802.11 standards operate in both 2.4 GHz and 5 GHz bands?",
-      "o": ["802.11b/g", "802.11n/ac", "802.11a/b", "802.11g only"],
+      "o": [
+        "802.11b/g",
+        "802.11n/ac",
+        "802.11a/b",
+        "802.11g only"
+      ],
       "a": 1,
       "e": "802.11n and 802.11ac operate in both 2.4 GHz and 5 GHz frequency bands."
     },
     {
       "type": "mc",
       "q": "What is the purpose of the 'ip helper-address' command?",
-      "o": ["Configure DHCP server", "Forward DHCP requests to server", "Enable DHCP snooping", "Block DHCP traffic"],
+      "o": [
+        "Configure DHCP server",
+        "Forward DHCP requests to server",
+        "Enable DHCP snooping",
+        "Block DHCP traffic"
+      ],
       "a": 1,
       "e": "The ip helper-address command forwards DHCP requests from clients to a remote DHCP server."
     },
     {
       "type": "mc",
       "q": "Which term describes a backup route with higher administrative distance?",
-      "o": ["Primary route", "Floating static route", "Default route", "Dynamic route"],
+      "o": [
+        "Primary route",
+        "Floating static route",
+        "Default route",
+        "Dynamic route"
+      ],
       "a": 1,
       "e": "A floating static route is configured with higher administrative distance to serve as a backup route."
     },
     {
       "type": "mc",
       "q": "What is the IPv6 prefix for unique local addresses?",
-      "o": ["FE80::/10", "FD00::/8", "2001::/16", "FF00::/8"],
+      "o": [
+        "FE80::/10",
+        "FD00::/8",
+        "2001::/16",
+        "FF00::/8"
+      ],
       "a": 1,
       "e": "FD00::/8 is the prefix for IPv6 unique local addresses (ULAs) used for local communications."
     },
     {
       "type": "mc",
       "q": "Which command displays DHCP bindings on a Cisco router?",
-      "o": ["show dhcp bindings", "show ip dhcp binding", "show dhcp leases", "show ip dhcp server"],
+      "o": [
+        "show dhcp bindings",
+        "show ip dhcp binding",
+        "show dhcp leases",
+        "show ip dhcp server"
+      ],
       "a": 1,
       "e": "The 'show ip dhcp binding' command displays DHCP lease information including IP addresses and MAC addresses."
     },
     {
       "type": "mc",
       "q": "What is the purpose of STP in a switched network?",
-      "o": ["Increase speed", "Prevent loops", "Provide security", "Enable routing"],
+      "o": [
+        "Increase speed",
+        "Prevent loops",
+        "Provide security",
+        "Enable routing"
+      ],
       "a": 1,
       "e": "STP (Spanning Tree Protocol) prevents loops in switched networks by creating a loop-free topology."
     }
@@ -257,6 +549,23 @@
   ],
   "drag_drop": [
     {
+      "question": "Drag and drop the characteristics of network architectures from the left onto the type of architecture on the right.",
+      "items": {
+        "Collapsed Core": "single device handles the core and the distribution layer; more cost-effective than other options; most appropriate for small network designs",
+        "Three-Tier": "separate devices handle the core and the distribution layer; enhances network availability"
+      }
+    },
+    {
+      "question": "Drag and drop the IPv4 network subnets from the left onto the correct usable host ranges on the right",
+      "items": {
+        "172.28.228.144/23": "172.28.228.1-172.28.229.254",
+        "172.28.226.144/21": "172.28.224.1-172.28.231.254",
+        "172.28.228.144/25": "172.28.228.129-172.28.228.254",
+        "172.28.228.144/29": "172.28.228.145-172.28.228.150",
+        "172.28.228.144/18": "172.28.192.1-172.26.255.254"
+      }
+    },
+    {
       "question": "Match the OSI layer to its function",
       "items": {
         "Physical": "Converts bits to signals",
@@ -358,7 +667,10 @@
   "troubleshooting": [
     {
       "scenario": "PC cannot ping its default gateway",
-      "symptoms": ["PC shows 'Destination host unreachable'", "ARP table shows incomplete entry"],
+      "symptoms": [
+        "PC shows 'Destination host unreachable'",
+        "ARP table shows incomplete entry"
+      ],
       "causes": [
         "Incorrect IP configuration on PC",
         "Wrong VLAN assignment",
@@ -374,7 +686,10 @@
     },
     {
       "scenario": "OSPF neighbors not forming adjacency",
-      "symptoms": ["OSPF state stuck at INIT", "No routes in routing table"],
+      "symptoms": [
+        "OSPF state stuck at INIT",
+        "No routes in routing table"
+      ],
       "causes": [
         "Mismatched hello/dead timers",
         "Different area IDs",
@@ -390,7 +705,10 @@
     },
     {
       "scenario": "DHCP clients not receiving IP addresses",
-      "symptoms": ["Clients show APIPA addresses", "DHCP discover packets sent"],
+      "symptoms": [
+        "Clients show APIPA addresses",
+        "DHCP discover packets sent"
+      ],
       "causes": [
         "DHCP server not configured",
         "DHCP pool exhausted",
